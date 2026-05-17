@@ -248,8 +248,8 @@ export function ListView({ onViewToggle }: ListViewProps) {
           <h2 className="font-display text-3xl mb-8">The Lab</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { name: 'Ricky Sanderson', role: 'Partner', email: 'rickymsanderson@gmail.com', phone: '317-800-4958' },
-              { name: 'Zach Shanks', role: 'Partner', email: 'zachshanks1@gmail.com', phone: '765-667-2346' }
+              { name: 'Ricky Sanderson', role: 'Partner', email: 'hello@loftylabz.com', phone: '317-800-4958' },
+              { name: 'Zach Shanks', role: 'Partner', email: 'hello@loftylabz.com', phone: '765-667-2346' }
             ].map((person, i) => (
               <div
                 key={i}

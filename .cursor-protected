@@ -1,0 +1,36 @@
+# .cursor-protected
+#
+# Files modified by Cursor as part of the Lofty Labz production hardening effort.
+# This manifest exists so future Figma Make pushes (which target `main`) can be
+# three-way-merged into Cursor branches without silently overwriting hand fixes.
+#
+# Rules:
+#   - Figma Make pushes go to `main`.
+#   - Cursor work happens on feature branches (e.g. `phase-0-eject`) and PRs into `main`.
+#   - When a Figma Make sync lands on `main`, diff the entries below against the
+#     incoming changes. Anything overlapping needs a manual reconcile.
+#
+# Format: `<path> :: <phase> :: <short reason>`
+# Sorted by path.
+
+.cursor-protected                          :: phase-0 :: marker file itself
+.gitignore                                 :: phase-0 :: standard Vite/React/Node ignore set (node_modules, dist, env, logs, editor)
+index.html                                 :: phase-0 :: standalone entry point + inline branded loader (replaces Figma Make shell)
+package-lock.json                          :: phase-0 :: lockfile committed for reproducible installs after eject
+package.json                               :: phase-0 :: react/react-dom moved from peerDependencies to dependencies for standalone Vite build
+public/.gitkeep                            :: phase-0 :: placeholder so empty public/ stays tracked
+src/app/components/Constellation.tsx       :: phase-0 :: constellation connecting lines always visible at 0.15 opacity (was hover-only)
+src/app/components/ListView.tsx            :: phase-0 :: replaced personal gmail addresses with hello@loftylabz.com
+src/app/components/NorthStar.tsx           :: phase-0 :: star uses var(--brass) gold + 4s pulse period (was white + 2.5s)
+src/app/components/StarMap.tsx             :: phase-0 :: ignition timer reduced from 2000ms to 800ms
+src/app/components/ui/accordion.tsx        :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by ConstellationPage)
+src/app/components/ui/button.tsx           :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by 5 pages)
+src/app/components/ui/input.tsx            :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by HailingFrequencyPage)
+src/app/components/ui/label.tsx            :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by HailingFrequencyPage)
+src/app/components/ui/tabs.tsx             :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by HailingFrequencyPage + TheLabPage)
+src/app/components/ui/textarea.tsx         :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by HailingFrequencyPage)
+src/app/lib/utils.ts                       :: phase-0 :: cn() helper for shadcn primitives (clsx + tailwind-merge)
+src/app/pages/CoordinatesPage.tsx          :: phase-0 :: replaced personal gmail addresses with hello@loftylabz.com
+src/app/pages/HailingFrequencyPage.tsx     :: phase-0 :: replaced personal gmail addresses with hello@loftylabz.com
+src/app/pages/TheLabPage.tsx               :: phase-0 :: replaced personal gmail addresses with hello@loftylabz.com
+src/main.tsx                               :: phase-0 :: React entry point (replaces Figma Make runtime entry)

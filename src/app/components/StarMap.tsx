@@ -83,7 +83,7 @@ export function StarMap({ onViewToggle }: StarMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIgnitionComplete(true), 2000);
+    const timer = setTimeout(() => setIgnitionComplete(true), 800);
     return () => clearTimeout(timer);
   }, []);
 

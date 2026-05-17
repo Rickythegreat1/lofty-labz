@@ -85,7 +85,7 @@ export default function CoordinatesPage() {
             <h2 className="font-display text-2xl mb-6">Contact Information</h2>
             <div className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 space-y-4">
               <div><p className="text-sm text-[var(--purple-300)] mb-1">Location</p><p className="text-white">Phoenix, Arizona</p><p className="text-sm text-[var(--lavender-200)]">LAT 33.4° N · LON 112.1° W</p></div>
-              <div><p className="text-sm text-[var(--purple-300)] mb-1">Partners</p><p className="text-white">Ricky Sanderson · rickymsanderson@gmail.com</p><p className="text-white">Zach Shanks · zachshanks1@gmail.com</p></div>
+              <div><p className="text-sm text-[var(--purple-300)] mb-1">Partners</p><p className="text-white">Ricky Sanderson · hello@loftylabz.com</p><p className="text-white">Zach Shanks · hello@loftylabz.com</p></div>
             </div>
           </div>
           <div>

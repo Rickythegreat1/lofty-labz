@@ -12,7 +12,7 @@ export default function TheLabPage() {
     {
       name: 'Ricky Sanderson',
       role: 'Partner',
-      email: 'rickymsanderson@gmail.com',
+      email: 'hello@loftylabz.com',
       phone: '317-800-4958',
       bio: 'Spent 8 years building products at startups that shipped, failed, and occasionally succeeded. Believes most agency work is theater. Prefers contracts with numbers.',
       signatureProject: "Eddie's Trades (+47% conversion)",
@@ -21,7 +21,7 @@ export default function TheLabPage() {
     {
       name: 'Zach Shanks',
       role: 'Partner',
-      email: 'zachshanks1@gmail.com',
+      email: 'hello@loftylabz.com',
       phone: '765-667-2346',
       bio: 'Designer who codes. Former in-house at a VC firm. Thinks motion is language, not decoration. Has strong opinions about whitespace.',
       signatureProject: 'Bright Path Wellness (3x engagement)',

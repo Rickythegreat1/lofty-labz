@@ -21,12 +21,12 @@ export function NorthStar() {
             scale: [1, 1.15, 1]
           }}
           transition={{
-            duration: 2.5,
+            duration: 4,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         >
-          <Star className="w-5 h-5 fill-white text-white" />
+          <Star className="w-5 h-5 fill-[var(--brass)] text-[var(--brass)]" />
         </motion.div>
         <span className="text-sm font-medium opacity-80 group-hover:opacity-100 transition-opacity">
           The Guarantee

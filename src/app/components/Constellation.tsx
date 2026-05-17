@@ -76,8 +76,8 @@ export function Constellation({
                 strokeWidth="1"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{
-                  pathLength: isHovered ? 1 : 0,
-                  opacity: isHovered ? 0.6 : 0
+                  pathLength: 1,
+                  opacity: isHovered ? 0.6 : 0.15
                 }}
                 transition={{ duration: 0.6 }}
               />

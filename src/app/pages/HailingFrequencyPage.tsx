@@ -361,8 +361,8 @@ export default function HailingFrequencyPage() {
               <p className="text-sm text-[var(--lavender-200)] mb-3">Partner</p>
               <div className="space-y-2 text-sm">
                 <p>
-                  <a href="mailto:rickymsanderson@gmail.com" className="text-[var(--purple-300)] hover:text-white transition-colors">
-                    rickymsanderson@gmail.com
+                  <a href="mailto:hello@loftylabz.com" className="text-[var(--purple-300)] hover:text-white transition-colors">
+                    hello@loftylabz.com
                   </a>
                 </p>
                 <p>
@@ -377,8 +377,8 @@ export default function HailingFrequencyPage() {
               <p className="text-sm text-[var(--lavender-200)] mb-3">Partner</p>
               <div className="space-y-2 text-sm">
                 <p>
-                  <a href="mailto:zachshanks1@gmail.com" className="text-[var(--purple-300)] hover:text-white transition-colors">
-                    zachshanks1@gmail.com
+                  <a href="mailto:hello@loftylabz.com" className="text-[var(--purple-300)] hover:text-white transition-colors">
+                    hello@loftylabz.com
                   </a>
                 </p>
                 <p>
