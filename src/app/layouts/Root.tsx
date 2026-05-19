@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router';
+import { ScrollProgress } from '../components/ScrollProgress';
 
 export default function Root() {
   return (
@@ -9,6 +10,7 @@ export default function Root() {
       >
         Skip to main content
       </a>
+      <ScrollProgress />
       <Outlet />
     </>
   );

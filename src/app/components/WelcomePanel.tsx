@@ -36,14 +36,14 @@ export function WelcomePanel({ onDismiss, onViewList }: WelcomePanelProps) {
               onClick={onViewList}
               className="focus-ring px-6 py-2.5 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
             >
               Skip to list view
             </motion.button>
             <motion.button
               className="focus-ring px-6 py-2.5 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
             >
               Book a call
             </motion.button>

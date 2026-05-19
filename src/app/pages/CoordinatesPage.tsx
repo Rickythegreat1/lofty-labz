@@ -94,7 +94,12 @@ export default function CoordinatesPage() {
               <p className="text-sm text-[var(--lavender-200)]">© 2026 Lofty Labz. All rights reserved.</p>
               <p className="text-sm text-[var(--lavender-200)]">Phoenix-based digital lab. Every engagement backed by written outcome guarantee.</p>
               <div className="pt-4 border-t border-[var(--border)] space-y-2">
-                <Link to="/the-north-star" className="block text-sm text-[var(--purple-300)] hover:text-white transition-colors">Guarantee Terms</Link>
+                <Link
+                  to="/the-north-star"
+                  className="block w-fit text-sm text-[var(--purple-300)] hover:text-white transition-colors"
+                >
+                  <span className="underline-draw">Guarantee Terms</span>
+                </Link>
               </div>
             </div>
           </div>

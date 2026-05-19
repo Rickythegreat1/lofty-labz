@@ -115,9 +115,9 @@ export default function TransmissionDetailPage() {
                 <span className="text-[var(--purple-300)]">·</span>
                 <Link
                   to={`/constellation/${constellation.id}`}
-                  className="text-sm text-[var(--purple-300)] hover:text-white transition-colors"
+                  className="focus-ring rounded-md text-sm text-[var(--purple-300)] hover:text-white transition-colors"
                 >
-                  Related to {constellation.name} →
+                  <span className="underline-draw">Related to {constellation.name}</span> →
                 </Link>
               </>
             )}

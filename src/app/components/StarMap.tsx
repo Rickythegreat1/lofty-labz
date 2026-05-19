@@ -186,7 +186,7 @@ export function StarMap({ onViewToggle }: StarMapProps) {
             onClick={onViewToggle}
             className="focus-ring flex items-center gap-2 px-4 py-3 min-h-[44px] border border-[var(--border)] rounded-md hover:bg-[var(--purple-700)] transition-colors cursor-pointer"
             whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.98, y: 1 }}
             aria-label="Toggle between star map and list view"
           >
             <span className="text-sm">★ Map</span>
@@ -242,7 +242,7 @@ export function StarMap({ onViewToggle }: StarMapProps) {
             <motion.button
               className="focus-ring px-6 py-3 min-h-[44px] bg-[var(--purple-500)] text-white rounded-full font-medium shadow-lg hover:shadow-xl transition-all cursor-pointer"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
             >
               Book a call →
             </motion.button>

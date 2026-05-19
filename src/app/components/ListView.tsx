@@ -103,7 +103,7 @@ function ConstellationRow({ constellation }: { constellation: ConstellationListE
             <motion.div
               className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all cursor-pointer"
               whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
               aria-label={`View ${star.name} case study: ${star.metric}`}
             >
               <div className="flex items-start justify-between mb-3">
@@ -183,7 +183,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
               <motion.button
                 className="focus-ring px-8 py-3 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.98, y: 1 }}
               >
                 Book a call →
               </motion.button>
@@ -192,7 +192,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
               onClick={onViewToggle}
               className="focus-ring px-8 py-3 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
             >
               View star map
             </motion.button>
@@ -291,7 +291,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
             <motion.button
               className="focus-ring px-8 py-4 min-h-[44px] bg-white text-[var(--purple-900)] rounded-lg font-bold text-lg hover:bg-[var(--lavender-100)] transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileTap={{ scale: 0.98, y: 1 }}
             >
               Book a call →
             </motion.button>

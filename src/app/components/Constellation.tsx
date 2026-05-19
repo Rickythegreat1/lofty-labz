@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router';
+import { HOVER_SCALE, PRESS_OFFSET_Y, springs } from '../lib/motion';
 
 interface Star {
   name: string;
@@ -81,7 +82,10 @@ export function Constellation({
                   pathLength: 1,
                   opacity: isHovered ? 0.6 : 0.15
                 }}
-                transition={{ duration: 0.6 }}
+                transition={{
+                  pathLength: { duration: 0.6, delay: (i - 1) * 0.05 },
+                  opacity: { duration: 0.3 }
+                }}
               />
             );
           })}
@@ -109,8 +113,9 @@ export function Constellation({
               onClick={() => navigate(`/star/${starSlug}`)}
               onMouseEnter={() => setActiveStar(starId)}
               onMouseLeave={() => setActiveStar(null)}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: HOVER_SCALE }}
               whileTap={{ scale: 0.95 }}
+              transition={springs.ui}
               aria-label={`View case study: ${star.name} - ${star.metric}`}
             >
               <motion.div
@@ -118,9 +123,10 @@ export function Constellation({
                 animate={{
                   scale: isActive ? 1.5 : 1,
                   boxShadow: isActive
-                    ? '0 0 20px rgba(250, 247, 251, 0.85)'
+                    ? '0 0 24px rgba(250, 247, 251, 0.9), 0 0 48px rgba(201, 169, 97, 0.35)'
                     : '0 4px 6px rgba(0, 0, 0, 0.1)'
                 }}
+                transition={springs.ui}
               />
 
               {/* Star label */}
