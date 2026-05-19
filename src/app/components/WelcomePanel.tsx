@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { X } from 'lucide-react';
+import { springs } from '../lib/motion';
 
 interface WelcomePanelProps {
   onDismiss: () => void;
@@ -14,7 +15,7 @@ export function WelcomePanel({ onDismiss, onViewList }: WelcomePanelProps) {
       initial={{ y: '100%', opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: '100%', opacity: 0 }}
-      transition={{ delay: 0.6, duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ ...springs.panel, delay: 0.2 }}
     >
       <div className="max-w-4xl mx-auto mb-8 px-6">
         <div className="bg-[var(--purple-900)]/90 backdrop-blur-xl border border-[var(--border)] rounded-xl p-8 shadow-2xl relative">

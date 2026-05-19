@@ -223,6 +223,24 @@
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
   }
+
+  /**
+   * Phase 3G — global prefers-reduced-motion guard.
+   * Neutralizes CSS-driven motion (animations, transitions, smooth scroll).
+   * Motion library physics are muted via <MotionConfig reducedMotion="user">
+   * in App.tsx so spring animations resolve instantly without removing the
+   * end-state visual change.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 @layer utilities {

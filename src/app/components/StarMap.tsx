@@ -209,7 +209,7 @@ export function StarMap({ onViewToggle }: StarMapProps) {
                 <Constellation
                   key={constellation.id}
                   {...constellation}
-                  delay={1.2 + index * 0.1}
+                  delay={0.3 + index * 0.1}
                   isHovered={hoveredConstellation === constellation.id}
                   onHover={() => setHoveredConstellation(constellation.id)}
                   onLeave={() => setHoveredConstellation(null)}
