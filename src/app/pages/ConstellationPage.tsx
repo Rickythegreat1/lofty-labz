@@ -132,7 +132,7 @@ export default function ConstellationPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-16"
         >
-          <div className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-8 md:p-12">
+          <div className="bg-[var(--glass-surface)] backdrop-blur-xl border border-[var(--glass-border)] rounded-2xl p-8 md:p-12">
             <h2 className="font-display text-2xl mb-4 flex items-center gap-3">
               <Check className="w-6 h-6 text-green-400" />
               The Promise
@@ -257,7 +257,7 @@ export default function ConstellationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
+          className="cta-block p-12 text-center"
         >
           <h2 className="font-display text-4xl mb-4">
             Ready to start with {constellation.name}?

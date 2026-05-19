@@ -91,7 +91,7 @@ export default function NorthStarPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12 text-center"
+            className="cta-block p-12 text-center"
           >
             <h2 className="font-display text-3xl mb-6">The Guarantee Reserve</h2>
             <p className="text-lg text-[var(--lavender-200)] max-w-2xl mx-auto">
@@ -130,9 +130,9 @@ export default function NorthStarPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12 text-center"
+            className="cta-block p-12 text-center"
           >
-            <FileText className="w-16 h-16 mx-auto mb-6 text-[var(--purple-300)]" />
+            <FileText className="w-16 h-16 mx-auto mb-6 text-[var(--brass)]" />
             <h2 className="font-display text-3xl mb-4">Every Engagement, In Writing</h2>
             <p className="text-lg text-[var(--lavender-200)] max-w-2xl mx-auto">
               Every engagement ships with a written scope of work.

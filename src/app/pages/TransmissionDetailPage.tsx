@@ -181,7 +181,7 @@ export default function TransmissionDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
+          className="cta-block p-12 text-center"
         >
           <h2 className="font-display text-3xl mb-4">Work with us</h2>
           <p className="text-lg text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">

@@ -206,7 +206,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-8 md:p-12"
+          className="bg-[var(--glass-surface)] backdrop-blur-xl border border-[var(--glass-border)] rounded-2xl p-8 md:p-12"
         >
           <div className="flex items-start gap-4 mb-6">
             <Star className="w-8 h-8 fill-white text-white flex-shrink-0 mt-1" />
@@ -281,7 +281,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
+          className="cta-block p-12 text-center"
         >
           <h2 className="font-display text-4xl mb-4">Ready to ship something real?</h2>
           <p className="text-xl text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">

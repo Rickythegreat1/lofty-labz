@@ -215,7 +215,7 @@ export default function StarPage() {
             className="mb-12"
           >
             <h2 className="font-display text-2xl mb-4 text-[var(--purple-300)]">The Reading</h2>
-            <div className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6">
+            <div className="bg-[var(--glass-surface)] backdrop-blur-xl border border-[var(--glass-border)] rounded-xl p-6">
               <div className="grid md:grid-cols-2 gap-4">
                 {Object.entries(star.reading).map(([key, value]) => (
                   <div key={key} className="flex justify-between items-center border-b border-[var(--purple-300)]/20 pb-2">
@@ -314,7 +314,7 @@ export default function StarPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.4, duration: 0.6 }}
-            className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
+            className="cta-block p-12 text-center"
           >
             <h2 className="font-display text-3xl mb-4">
               Ready to ship something like this?
