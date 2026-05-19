@@ -15,6 +15,7 @@ const constellations = [
   {
     id: 'the-build',
     name: 'The Build',
+    practice: 'Web design & development',
     tagline: 'Web design & development that performs, or we keep working.',
     description: 'Sites, applications, headless WP, the works.',
     position: { x: 25, y: 35 },
@@ -27,6 +28,7 @@ const constellations = [
   {
     id: 'the-voice',
     name: 'The Voice',
+    practice: 'Brand identity & messaging',
     tagline: 'Brand identity that doesn\'t apologize.',
     description: 'Logo, system, voice, message — the things people remember you by.',
     position: { x: 65, y: 28 },
@@ -39,6 +41,7 @@ const constellations = [
   {
     id: 'the-signal',
     name: 'The Signal',
+    practice: 'Social media & content',
     tagline: 'Content that makes the algorithm relevant, not the boss.',
     description: 'Social, content, the rhythm of staying visible.',
     position: { x: 45, y: 55 },
@@ -51,6 +54,7 @@ const constellations = [
   {
     id: 'the-engine',
     name: 'The Engine',
+    practice: 'AI workflows & automation',
     tagline: 'Workflows that run while you sleep.',
     description: 'AI, automation, micro-APIs — the layer that compounds your team.',
     position: { x: 75, y: 65 },
@@ -63,6 +67,7 @@ const constellations = [
   {
     id: 'the-lighthouse',
     name: 'The Lighthouse',
+    practice: 'Care retainers & ongoing support',
     tagline: 'What happens after launch matters more than the launch.',
     description: 'Care retainers, monitoring, ongoing optimization.',
     position: { x: 15, y: 68 },

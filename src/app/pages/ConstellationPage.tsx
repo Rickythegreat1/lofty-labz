@@ -4,10 +4,20 @@ import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { getConstellationById } from '../data/constellations';
 import { Button } from '../components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function ConstellationPage() {
   const { slug } = useParams<{ slug: string }>();
   const constellation = slug ? getConstellationById(slug) : null;
+
+  useDocumentMeta({
+    title: constellation
+      ? `${constellation.name} — ${constellation.practice} · Lofty Labz`
+      : 'Constellation not found · Lofty Labz',
+    description: constellation
+      ? `${constellation.tagline} — ${constellation.description}`
+      : 'The constellation you were looking for does not exist on our map.',
+  });
 
   if (!constellation) {
     return (

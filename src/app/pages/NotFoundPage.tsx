@@ -1,8 +1,15 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { Home } from 'lucide-react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function NotFoundPage() {
+  useDocumentMeta({
+    title: 'Lost coordinates · Lofty Labz',
+    description:
+      'This route is not on the Lofty Labz star map. Return to the home view to find what you were looking for.',
+  });
+
   return (
     <main id="main-content" className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center relative overflow-hidden">
       <div className="absolute inset-0" aria-hidden="true">
@@ -32,7 +39,7 @@ export default function NotFoundPage() {
           </svg>
         </motion.div>
 
-        <h1 className="font-display text-8xl md:text-9xl mb-4 text-[var(--purple-300)]">404</h1>
+        <h1 className="font-display text-8xl md:text-9xl mb-4 text-[var(--brass)]">404</h1>
         <h2 className="font-display text-4xl md:text-5xl mb-6">You're between stars</h2>
         <p className="text-xl text-[var(--lavender-200)] mb-12 max-w-md mx-auto">Nothing here. The telescope has drifted off course.</p>
 
@@ -44,7 +51,9 @@ export default function NotFoundPage() {
             </button>
           </Link>
           <Link to="/?view=list">
-            <button className="px-8 py-4 border border-[var(--border)] text-white hover:bg-[var(--purple-700)] rounded-lg font-bold transition-colors">View list catalog</button>
+            <button className="focus-ring px-8 py-4 border border-[var(--border)] text-white hover:bg-[var(--purple-700)] rounded-lg font-bold transition-colors">
+              View list catalog
+            </button>
           </Link>
         </div>
 

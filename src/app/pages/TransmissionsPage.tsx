@@ -3,8 +3,15 @@ import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, Radio } from 'lucide-react';
 import { transmissions } from '../data/transmissions';
 import { useState } from 'react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function TransmissionsPage() {
+  useDocumentMeta({
+    title: 'Transmissions — Notes from the lab · Lofty Labz',
+    description:
+      'Essays and field notes from Lofty Labz on guarantees, build process, measurement, and the craft of digital work.',
+  });
+
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // Get all unique tags

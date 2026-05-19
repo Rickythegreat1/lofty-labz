@@ -3,10 +3,17 @@ import { motion } from 'motion/react';
 import { ArrowLeft, Mail, Phone, Beaker } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Button } from '../components/ui/button';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function TheLabPage() {
   const { section } = useParams<{ section?: string }>();
   const defaultTab = section || 'team';
+
+  useDocumentMeta({
+    title: 'The Lab — Team, methodology, and ways of working · Lofty Labz',
+    description:
+      'Meet the team behind Lofty Labz and read how we run discovery, execution, and measurement on every engagement.',
+  });
 
   const team = [
     {

@@ -2,8 +2,15 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
 import { StarMap } from '../components/StarMap';
 import { ListView } from '../components/ListView';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function HomePage() {
+  useDocumentMeta({
+    title: 'Lofty Labz — A digital lab in Phoenix. Every engagement backed in writing.',
+    description:
+      'Lofty Labz is a Phoenix digital agency. Five practices, one written guarantee on every engagement. Map the work, read the case studies, schedule a discovery call.',
+  });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const viewParam = searchParams.get('view');
   const [viewMode, setViewMode] = useState<'map' | 'list'>(viewParam === 'list' ? 'list' : 'map');

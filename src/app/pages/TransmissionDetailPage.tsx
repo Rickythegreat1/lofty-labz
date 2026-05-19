@@ -4,11 +4,21 @@ import { ArrowLeft, Radio, Clock, User } from 'lucide-react';
 import { getTransmissionBySlug, getRecentTransmissions } from '../data/transmissions';
 import { getConstellationById } from '../data/constellations';
 import { Button } from '../components/ui/button';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function TransmissionDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const transmission = slug ? getTransmissionBySlug(slug) : null;
+
+  useDocumentMeta({
+    title: transmission
+      ? `${transmission.subject} · Lofty Labz Transmissions`
+      : 'Transmission not found · Lofty Labz',
+    description: transmission
+      ? transmission.excerpt
+      : 'The transmission you were looking for is not in our archive.',
+  });
 
   if (!transmission) {
     return (

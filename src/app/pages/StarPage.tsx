@@ -4,12 +4,22 @@ import { ArrowLeft, Check, X, ArrowRight } from 'lucide-react';
 import { getStarById } from '../data/constellations';
 import { Button } from '../components/ui/button';
 import { useEffect, useState } from 'react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function StarPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [showWarp, setShowWarp] = useState(true);
   const result = slug ? getStarById(slug) : null;
+
+  useDocumentMeta({
+    title: result
+      ? `${result.star.name} — ${result.star.metric} · Lofty Labz`
+      : 'Case study not found · Lofty Labz',
+    description: result
+      ? `${result.star.client} · ${result.star.metric}. A guaranteed outcome from the ${result.constellation.name} practice at Lofty Labz.`
+      : 'The case study you were looking for does not exist.',
+  });
 
   useEffect(() => {
     // Simulate warp transition

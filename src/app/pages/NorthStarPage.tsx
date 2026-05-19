@@ -2,8 +2,15 @@ import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { Star, Shield, FileText, ArrowLeft } from 'lucide-react';
 import { constellations } from '../data/constellations';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function NorthStarPage() {
+  useDocumentMeta({
+    title: 'The North Star — Lofty Labz Outcome Guarantee',
+    description:
+      'Every Lofty Labz engagement ships with a written outcome guarantee. Read the policy, the fine print, and how we hold a reserve to back it.',
+  });
+
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       <div className="fixed inset-0 opacity-20 pointer-events-none">

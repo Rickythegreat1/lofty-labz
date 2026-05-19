@@ -7,8 +7,15 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { useState } from 'react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function HailingFrequencyPage() {
+  useDocumentMeta({
+    title: 'Hailing Frequency — Book a discovery call · Lofty Labz',
+    description:
+      'Open a hailing frequency with Lofty Labz. Schedule a 30-minute discovery call or send a transmission about your project.',
+  });
+
   const [submitted, setSubmitted] = useState(false);
   const [showPacket, setShowPacket] = useState(false);
 

@@ -3,8 +3,15 @@ import { motion } from 'motion/react';
 import { ArrowLeft, MapPin, ExternalLink } from 'lucide-react';
 import { constellations } from '../data/constellations';
 import { transmissions } from '../data/transmissions';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function CoordinatesPage() {
+  useDocumentMeta({
+    title: 'Coordinates — Phoenix · Lofty Labz',
+    description:
+      'How to reach Lofty Labz: location, contacts, and the legal coordinates of a Phoenix digital lab that backs every engagement in writing.',
+  });
+
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       <div className="fixed inset-0 opacity-20 pointer-events-none">
