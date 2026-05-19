@@ -53,7 +53,7 @@ export default function HailingFrequencyPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Back to map</span>
           </Link>
@@ -76,7 +76,7 @@ export default function HailingFrequencyPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-5xl mx-auto px-6 py-16">
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -166,14 +166,17 @@ export default function HailingFrequencyPage() {
                 </div>
               </div>
 
-              {/* Calendly Embed Placeholder */}
+              {/* Scheduling — interim mailto until Calendly is live */}
               <div className="bg-[var(--purple-700)]/30 border border-[var(--border)] rounded-lg p-12 text-center">
                 <p className="text-[var(--lavender-200)] mb-6">
-                  Calendly booking widget would be embedded here
+                  We&rsquo;re finalizing self-serve scheduling. In the meantime, send a note and we&rsquo;ll reply with the next two open slots.
                 </p>
-                <Button size="lg" className="bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white">
-                  Open Calendly Scheduler →
-                </Button>
+                <a
+                  href="mailto:hello@loftylabz.com?subject=Discovery%20Call%20Request"
+                  className="focus-ring inline-flex items-center justify-center rounded-md bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white px-8 py-3 min-h-[44px] font-medium transition-colors"
+                >
+                  Schedule a Discovery Call →
+                </a>
               </div>
             </motion.div>
           </TabsContent>

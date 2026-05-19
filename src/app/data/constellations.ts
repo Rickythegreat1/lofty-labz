@@ -1,3 +1,12 @@
+/**
+ * KNOWN ISSUE (deferred to Phase 3D — Star Map Overhaul):
+ * `Constellation.tsx` reads star positions from hardcoded literals in its
+ * component body instead of from this data layer. As a result, edits to
+ * `x` / `y` here are not reflected on the star map; the list view, detail
+ * pages, and inline constellation diagrams DO honor this data. The fix is
+ * a single source-of-truth refactor done as part of the 3D rebuild, so we
+ * avoid duplicating the work here.
+ */
 export interface Star {
   id: string;
   name: string;

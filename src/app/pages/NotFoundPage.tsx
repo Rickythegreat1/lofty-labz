@@ -4,8 +4,8 @@ import { Home } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0">
+    <main id="main-content" className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0" aria-hidden="true">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -38,7 +38,7 @@ export default function NotFoundPage() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to="/">
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold transition-colors">
+            <button className="focus-ring inline-flex items-center gap-2 px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold transition-colors">
               <Home className="w-5 h-5" />
               Return to map
             </button>
@@ -53,6 +53,6 @@ export default function NotFoundPage() {
           <p>Last known: PHX, AZ · LAT 33.4° N · LON 112.1° W</p>
         </div>
       </motion.div>
-    </div>
+    </main>
   );
 }

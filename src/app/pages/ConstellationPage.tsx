@@ -32,7 +32,7 @@ export default function ConstellationPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Back to map</span>
           </Link>
@@ -56,7 +56,7 @@ export default function ConstellationPage() {
       </header>
 
       {/* Content */}
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         {/* Constellation Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -65,30 +65,51 @@ export default function ConstellationPage() {
           className="mb-16"
         >
           <div className="mb-8">
-            {/* Constellation Diagram - Simple representation */}
+            {/* Constellation Diagram - normalized to a 200x100 viewBox with padding */}
             <div className="mb-6 flex justify-center">
-              <svg width="200" height="100" viewBox="0 0 200 100" className="opacity-50">
-                {constellation.stars.map((star, i) => (
-                  <g key={i}>
-                    {i > 0 && (
-                      <line
-                        x1={(constellation.stars[i - 1].x ?? 0) * 2}
-                        y1={(constellation.stars[i - 1].y ?? 0) * 2}
-                        x2={(star.x ?? 0) * 2}
-                        y2={(star.y ?? 0) * 2}
-                        stroke="var(--purple-300)"
-                        strokeWidth="1"
-                      />
-                    )}
-                    <circle
-                      cx={(star.x ?? 0) * 2}
-                      cy={(star.y ?? 0) * 2}
-                      r="3"
-                      fill="white"
-                    />
-                  </g>
-                ))}
-              </svg>
+              {(() => {
+                const points = constellation.stars
+                  .map((s) => ({ x: s.x ?? 0, y: s.y ?? 0 }))
+                  .filter((p) => p.x !== 0 || p.y !== 0);
+                if (points.length === 0) return null;
+                const padding = 16;
+                const vbWidth = 200;
+                const vbHeight = 100;
+                const xs = points.map((p) => p.x);
+                const ys = points.map((p) => p.y);
+                const minX = Math.min(...xs);
+                const maxX = Math.max(...xs);
+                const minY = Math.min(...ys);
+                const maxY = Math.max(...ys);
+                const spanX = maxX - minX || 1;
+                const spanY = maxY - minY || 1;
+                const scaleX = (vbWidth - padding * 2) / spanX;
+                const scaleY = (vbHeight - padding * 2) / spanY;
+                const project = (p: { x: number; y: number }) => ({
+                  x: padding + (p.x - minX) * scaleX,
+                  y: padding + (p.y - minY) * scaleY,
+                });
+                const projected = points.map(project);
+                return (
+                  <svg width="200" height="100" viewBox="0 0 200 100" className="opacity-50">
+                    {projected.map((pt, i) => (
+                      <g key={i}>
+                        {i > 0 && (
+                          <line
+                            x1={projected[i - 1].x}
+                            y1={projected[i - 1].y}
+                            x2={pt.x}
+                            y2={pt.y}
+                            stroke="var(--purple-300)"
+                            strokeWidth="1"
+                          />
+                        )}
+                        <circle cx={pt.x} cy={pt.y} r="3" fill="var(--paper)" />
+                      </g>
+                    ))}
+                  </svg>
+                );
+              })()}
             </div>
 
             <h1 className="font-display text-5xl md:text-7xl mb-4">{constellation.name}</h1>
@@ -181,7 +202,7 @@ export default function ConstellationPage() {
               <Link
                 key={i}
                 to={`/star/${star.id}`}
-                className="group"
+                className="group focus-ring rounded-lg"
               >
                 <motion.div
                   className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all h-full"
@@ -239,7 +260,7 @@ export default function ConstellationPage() {
           className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
         >
           <h2 className="font-display text-4xl mb-4">
-            Ready to start {constellation.name.toLowerCase()}?
+            Ready to start with {constellation.name}?
           </h2>
           <p className="text-xl text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">
             Book a 30-minute discovery call. We'll discuss your project, walk through our process, and determine if we're the right fit.
@@ -249,7 +270,7 @@ export default function ConstellationPage() {
               size="lg"
               className="bg-white text-[var(--purple-900)] hover:bg-[var(--lavender-100)] font-bold text-lg px-8 py-6"
             >
-              Book a {constellation.name} discovery call →
+              Book a discovery call about {constellation.name} →
             </Button>
           </Link>
         </motion.div>

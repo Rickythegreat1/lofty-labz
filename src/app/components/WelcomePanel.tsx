@@ -20,7 +20,7 @@ export function WelcomePanel({ onDismiss, onViewList }: WelcomePanelProps) {
         <div className="bg-[var(--purple-900)]/90 backdrop-blur-xl border border-[var(--border)] rounded-xl p-8 shadow-2xl relative">
           <button
             onClick={onDismiss}
-            className="absolute top-2 right-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-[var(--purple-700)] rounded-lg transition-colors cursor-pointer"
+            className="focus-ring absolute top-2 right-2 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-[var(--purple-700)] rounded-lg transition-colors cursor-pointer"
             aria-label="Close welcome message"
           >
             <X className="w-5 h-5" />
@@ -34,14 +34,14 @@ export function WelcomePanel({ onDismiss, onViewList }: WelcomePanelProps) {
           <div className="flex flex-wrap gap-4">
             <motion.button
               onClick={onViewList}
-              className="px-6 py-2.5 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
+              className="focus-ring px-6 py-2.5 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               Skip to list view
             </motion.button>
             <motion.button
-              className="px-6 py-2.5 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
+              className="focus-ring px-6 py-2.5 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -50,7 +50,7 @@ export function WelcomePanel({ onDismiss, onViewList }: WelcomePanelProps) {
           </div>
 
           <p className="text-xs text-[var(--purple-300)] mt-4 opacity-70">
-            Pan to explore the constellation map above
+            Hover a constellation above to learn more about each practice.
           </p>
         </div>
       </div>

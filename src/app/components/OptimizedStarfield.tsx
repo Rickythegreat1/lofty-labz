@@ -1,13 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 
 interface OptimizedStarfieldProps {
   mousePosition: { x: number; y: number };
 }
 
+interface Star {
+  x: number;
+  y: number;
+  radius: number;
+  opacity: number;
+  speed: number;
+}
+
 export function OptimizedStarfield({ mousePosition }: OptimizedStarfieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Array<{ x: number; y: number; radius: number; opacity: number; speed: number }>>([]);
+  const mouseRef = useRef(mousePosition);
+  const starsRef = useRef<Star[]>([]);
+
+  // Keep the latest mouse position addressable inside the rAF loop without
+  // tearing down the render chain on every pointer move.
+  mouseRef.current = mousePosition;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,45 +43,42 @@ export function OptimizedStarfield({ mousePosition }: OptimizedStarfieldProps) {
           y: Math.random() * canvas.height,
           radius: Math.random() * 1.5 + 0.5,
           opacity: Math.random() * 0.5 + 0.3,
-          speed: Math.random() * 0.0005 + 0.0002
+          speed: Math.random() * 0.0005 + 0.0002,
         });
       }
     }
 
-    let animationFrame: number;
+    let animationFrame = 0;
     let time = 0;
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const parallaxX = (mousePosition.x - 50) * 0.5;
-      const parallaxY = (mousePosition.y - 50) * 0.5;
+      const { x: mx, y: my } = mouseRef.current;
+      const parallaxX = (mx - 50) * 0.5;
+      const parallaxY = (my - 50) * 0.5;
 
-      starsRef.current.forEach(star => {
+      const stars = starsRef.current;
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
         const pulse = Math.sin(time * star.speed) * 0.3 + 0.7;
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * pulse})`;
+        ctx.fillStyle = `rgba(250, 247, 251, ${star.opacity * pulse})`;
         ctx.beginPath();
-        ctx.arc(
-          star.x + parallaxX,
-          star.y + parallaxY,
-          star.radius,
-          0,
-          Math.PI * 2
-        );
+        ctx.arc(star.x + parallaxX, star.y + parallaxY, star.radius, 0, Math.PI * 2);
         ctx.fill();
-      });
+      }
 
       time += 1;
       animationFrame = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrame = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', updateSize);
       cancelAnimationFrame(animationFrame);
     };
-  }, [mousePosition]);
+  }, []);
 
   return (
     <motion.canvas

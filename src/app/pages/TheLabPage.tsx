@@ -116,7 +116,7 @@ export default function TheLabPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Back to map</span>
           </Link>
@@ -139,7 +139,7 @@ export default function TheLabPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -189,7 +189,7 @@ export default function TheLabPage() {
                         {person.email && (
                           <a
                             href={`mailto:${person.email}`}
-                            className="flex items-center gap-2 text-[var(--lavender-200)] hover:text-white transition-colors"
+                            className="focus-ring rounded-md flex items-center gap-2 text-[var(--lavender-200)] hover:text-white transition-colors"
                           >
                             <Mail className="w-4 h-4" />
                             {person.email}
@@ -198,7 +198,7 @@ export default function TheLabPage() {
                         {person.phone && (
                           <a
                             href={`tel:${person.phone}`}
-                            className="flex items-center gap-2 text-[var(--lavender-200)] hover:text-white transition-colors"
+                            className="focus-ring rounded-md flex items-center gap-2 text-[var(--lavender-200)] hover:text-white transition-colors"
                           >
                             <Phone className="w-4 h-4" />
                             {person.phone}

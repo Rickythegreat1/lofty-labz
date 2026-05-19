@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 export function NorthStar() {
   return (
-    <Link to="/the-north-star">
+    <Link to="/the-north-star" className="focus-ring rounded-md">
       <motion.div
         className="flex items-center gap-2 cursor-pointer group min-h-[44px] px-2"
         initial={{ opacity: 0, scale: 0 }}

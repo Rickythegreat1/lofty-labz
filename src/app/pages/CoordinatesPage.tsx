@@ -12,7 +12,7 @@ export default function CoordinatesPage() {
       </div>
       <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" /><span>Back to map</span>
           </Link>
           <Link to="/" className="flex items-center gap-3">
@@ -26,7 +26,7 @@ export default function CoordinatesPage() {
           </Link>
         </div>
       </header>
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16 text-center">
           <MapPin className="w-16 h-16 mx-auto mb-6 text-[var(--purple-300)]" />
           <h1 className="font-display text-6xl mb-6">Coordinates</h1>
@@ -72,7 +72,7 @@ export default function CoordinatesPage() {
             <h2 className="font-display text-2xl mb-6">Recent Transmissions</h2>
             <div className="space-y-3">
               {transmissions.slice(0, 6).map((t, i) => (
-                <Link key={i} to={`/transmissions/${t.slug}`} className="block bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-4 hover:border-[var(--purple-300)] transition-all">
+                <Link key={i} to={`/transmissions/${t.slug}`} className="focus-ring block bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-4 hover:border-[var(--purple-300)] transition-all">
                   <p className="text-xs text-[var(--purple-300)] font-mono mb-1">{t.txId} · {t.date}</p>
                   <p className="font-bold text-sm">{t.subject}</p>
                 </Link>

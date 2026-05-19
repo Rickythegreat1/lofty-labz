@@ -70,6 +70,63 @@ const constellations = [
   }
 ];
 
+type ConstellationListEntry = (typeof constellations)[number];
+
+function ConstellationRow({ constellation }: { constellation: ConstellationListEntry }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6 }}
+      className="border-b border-[var(--border)] pb-16 last:border-b-0"
+    >
+      <div className="mb-8">
+        <h2 className="font-display text-3xl mb-2">{constellation.name}</h2>
+        <p className="text-[var(--purple-300)] text-sm font-mono uppercase tracking-wider mb-3">
+          {constellation.practice}
+        </p>
+        <p className="text-lg text-[var(--lavender-200)] mb-4">{constellation.tagline}</p>
+        <p className="text-base text-[var(--lavender-200)]/80">{constellation.description}</p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {constellation.stars.map((star, i) => (
+          <Link
+            key={i}
+            to={`/star/${star.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+            className="group focus-ring rounded-lg"
+          >
+            <motion.div
+              className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all cursor-pointer"
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              aria-label={`View ${star.name} case study: ${star.metric}`}
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="w-2 h-2 bg-white rounded-full" />
+                <ArrowRight className="w-4 h-4 text-[var(--purple-300)] opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <h3 className="font-bold text-base mb-2">{star.name}</h3>
+              <p className="text-sm text-[var(--purple-300)]">{star.metric}</p>
+            </motion.div>
+          </Link>
+        ))}
+      </div>
+
+      <Link to={`/constellation/${constellation.id}`}>
+        <button className="focus-ring rounded-md px-1 mt-6 text-white hover:text-[var(--purple-300)] transition-colors font-medium flex items-center gap-2">
+          Explore {constellation.name}
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </Link>
+    </motion.div>
+  );
+}
+
 export function ListView({ onViewToggle }: ListViewProps) {
   return (
     <div className="min-h-screen bg-[#0a0612] text-[var(--paper)]">
@@ -97,7 +154,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           {/* View Toggle */}
           <button
             onClick={onViewToggle}
-            className="flex items-center gap-2 px-4 py-3 min-h-[44px] border border-[var(--border)] rounded-md hover:bg-[var(--purple-700)] transition-colors cursor-pointer"
+            className="focus-ring flex items-center gap-2 px-4 py-3 min-h-[44px] border border-[var(--border)] rounded-md hover:bg-[var(--purple-700)] transition-colors cursor-pointer"
             aria-label="Toggle to star map view"
           >
             <span className="text-sm">★ Map</span>
@@ -107,6 +164,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
         </div>
       </header>
 
+      <main id="main-content">
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20">
         <motion.div
@@ -123,7 +181,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           <div className="flex flex-wrap gap-4">
             <Link to="/hailing-frequency">
               <motion.button
-                className="px-8 py-3 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
+                className="focus-ring px-8 py-3 min-h-[44px] bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -132,7 +190,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
             </Link>
             <motion.button
               onClick={onViewToggle}
-              className="px-8 py-3 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
+              className="focus-ring px-8 py-3 min-h-[44px] border border-[var(--border)] hover:bg-[var(--purple-700)] text-white rounded-lg font-medium transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -175,66 +233,9 @@ export function ListView({ onViewToggle }: ListViewProps) {
       {/* Constellations / Services */}
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="space-y-16">
-          {constellations.map((constellation, index) => {
-            const ref = useRef(null);
-            const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-            return (
-              <motion.div
-                key={constellation.id}
-                ref={ref}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6 }}
-                className="border-b border-[var(--border)] pb-16 last:border-b-0"
-              >
-              <div className="mb-8">
-                <h2 className="font-display text-3xl mb-2">{constellation.name}</h2>
-                <p className="text-[var(--purple-300)] text-sm font-mono uppercase tracking-wider mb-3">
-                  {constellation.practice}
-                </p>
-                <p className="text-lg text-[var(--lavender-200)] mb-4">
-                  {constellation.tagline}
-                </p>
-                <p className="text-base text-[var(--lavender-200)]/80">
-                  {constellation.description}
-                </p>
-              </div>
-
-              {/* Case Studies */}
-              <div className="grid md:grid-cols-3 gap-6">
-                {constellation.stars.map((star, i) => (
-                  <Link
-                    key={i}
-                    to={`/star/${star.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-                    className="group"
-                  >
-                    <motion.div
-                      className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all cursor-pointer"
-                      whileHover={{ y: -4 }}
-                      whileTap={{ scale: 0.98 }}
-                      aria-label={`View ${star.name} case study: ${star.metric}`}
-                    >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="w-2 h-2 bg-white rounded-full" />
-                        <ArrowRight className="w-4 h-4 text-[var(--purple-300)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <h3 className="font-bold text-base mb-2">{star.name}</h3>
-                      <p className="text-sm text-[var(--purple-300)]">{star.metric}</p>
-                    </motion.div>
-                  </Link>
-                ))}
-              </div>
-
-              <Link to={`/constellation/${constellation.id}`}>
-                <button className="mt-6 text-white hover:text-[var(--purple-300)] transition-colors font-medium flex items-center gap-2">
-                  Explore {constellation.name}
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </Link>
-              </motion.div>
-            );
-          })}
+          {constellations.map((constellation) => (
+            <ConstellationRow key={constellation.id} constellation={constellation} />
+          ))}
         </div>
       </section>
 
@@ -288,7 +289,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           </p>
           <Link to="/hailing-frequency">
             <motion.button
-              className="px-8 py-4 min-h-[44px] bg-white text-[var(--purple-900)] rounded-lg font-bold text-lg hover:bg-[var(--lavender-100)] transition-colors cursor-pointer"
+              className="focus-ring px-8 py-4 min-h-[44px] bg-white text-[var(--purple-900)] rounded-lg font-bold text-lg hover:bg-[var(--lavender-100)] transition-colors cursor-pointer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -297,6 +298,7 @@ export function ListView({ onViewToggle }: ListViewProps) {
           </Link>
         </motion.div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-6 py-12 border-t border-[var(--border)]">

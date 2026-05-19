@@ -201,3 +201,20 @@
     line-height: 1.5;
   }
 }
+
+@layer utilities {
+  /**
+   * Shared keyboard-focus ring used across every bespoke interactive element.
+   * Brass on dark with a 2px offset on the page background; visible against the
+   * deep-purple palette without competing with the brand glow.
+   */
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.18);
+    border-radius: inherit;
+  }
+}

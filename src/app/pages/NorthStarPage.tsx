@@ -1,12 +1,9 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { Star, Download, Shield, FileText, ArrowLeft } from 'lucide-react';
+import { Star, Shield, FileText, ArrowLeft } from 'lucide-react';
 import { constellations } from '../data/constellations';
 
 export default function NorthStarPage() {
-  const guaranteeReserve = 47000;
-  const lastUpdated = 'May 1, 2026';
-
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       <div className="fixed inset-0 opacity-20 pointer-events-none">
@@ -15,7 +12,7 @@ export default function NorthStarPage() {
 
       <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Back to map</span>
           </Link>
@@ -34,7 +31,7 @@ export default function NorthStarPage() {
         </div>
       </header>
 
-      <main className="relative z-10">
+      <main id="main-content" className="relative z-10">
         <section className="min-h-screen flex items-center justify-center px-6 py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -89,21 +86,17 @@ export default function NorthStarPage() {
         </section>
 
         <section className="max-w-7xl mx-auto px-6 py-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12">
-            <h2 className="font-display text-3xl mb-8 text-center">The Guarantee Reserve</h2>
-            <div className="text-center mb-8">
-              <p className="text-[var(--lavender-200)] mb-4">We maintain a capital reserve against potential refunds. This is the real money backing the guarantee.</p>
-              <div className="inline-block bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-8">
-                <p className="text-sm text-[var(--purple-300)] font-mono uppercase mb-2">Current Reserve</p>
-                <p className="font-display text-6xl mb-2">${guaranteeReserve.toLocaleString()}</p>
-                <p className="text-sm text-[var(--lavender-200)]">Last updated: {lastUpdated}</p>
-              </div>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6 mt-8">
-              <div className="text-center"><p className="text-3xl font-bold mb-2">$8,400</p><p className="text-sm text-[var(--lavender-200)]">Lifetime payouts</p></div>
-              <div className="text-center"><p className="text-3xl font-bold mb-2">3</p><p className="text-sm text-[var(--lavender-200)]">Projects with partial refunds</p></div>
-              <div className="text-center"><p className="text-3xl font-bold mb-2">94%</p><p className="text-sm text-[var(--lavender-200)]">Guarantees met or exceeded</p></div>
-            </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12 text-center"
+          >
+            <h2 className="font-display text-3xl mb-6">The Guarantee Reserve</h2>
+            <p className="text-lg text-[var(--lavender-200)] max-w-2xl mx-auto">
+              We maintain a standing reserve to back every guarantee we write.
+            </p>
           </motion.div>
         </section>
 
@@ -132,14 +125,18 @@ export default function NorthStarPage() {
         </section>
 
         <section className="max-w-7xl mx-auto px-6 py-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-gradient-to-br from-[var(--purple-700)] to-[var(--purple-900)] border border-[var(--border)] rounded-2xl p-12 text-center"
+          >
             <FileText className="w-16 h-16 mx-auto mb-6 text-[var(--purple-300)]" />
-            <h2 className="font-display text-3xl mb-4">See The Guarantee In Action</h2>
-            <p className="text-lg text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">Download a sample Statement of Work with our guarantee language.</p>
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[var(--purple-900)] rounded-lg font-bold text-lg hover:bg-[var(--lavender-100)] transition-colors">
-              <Download className="w-5 h-5" />
-              Download Sample SOW (PDF)
-            </button>
+            <h2 className="font-display text-3xl mb-4">Every Engagement, In Writing</h2>
+            <p className="text-lg text-[var(--lavender-200)] max-w-2xl mx-auto">
+              Every engagement ships with a written scope of work.
+            </p>
           </motion.div>
         </section>
 
@@ -148,7 +145,7 @@ export default function NorthStarPage() {
             <h2 className="font-display text-4xl mb-6">Ready to work with a guarantee?</h2>
             <p className="text-xl text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">Book a discovery call. We'll discuss your project, establish measurable outcomes, and put it all in writing.</p>
             <Link to="/hailing-frequency">
-              <button className="px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold text-lg transition-colors">Book a call →</button>
+              <button className="focus-ring px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold text-lg transition-colors">Book a call →</button>
             </Link>
           </motion.div>
         </section>

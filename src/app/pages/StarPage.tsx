@@ -85,7 +85,7 @@ export default function StarPage() {
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
+              className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
@@ -110,7 +110,7 @@ export default function StarPage() {
         </header>
 
         {/* Content */}
-        <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+        <main id="main-content" className="relative z-10 max-w-5xl mx-auto px-6 py-16">
           {/* Lab Notebook Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

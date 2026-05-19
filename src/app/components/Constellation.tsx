@@ -103,7 +103,7 @@ export function Constellation({
             }}
           >
             <motion.button
-              className="w-11 h-11 flex items-center justify-center cursor-pointer relative"
+              className="focus-ring w-11 h-11 flex items-center justify-center cursor-pointer relative rounded-full"
               onClick={() => navigate(`/star/${starSlug}`)}
               onMouseEnter={() => setActiveStar(starId)}
               onMouseLeave={() => setActiveStar(null)}
@@ -145,7 +145,7 @@ export function Constellation({
       })}
 
       {/* Constellation name */}
-      <Link to={`/constellation/${id}`}>
+      <Link to={`/constellation/${id}`} className="focus-ring rounded-md">
         <motion.div
           className="absolute left-1/2 -translate-x-1/2 top-full mt-8 text-center cursor-pointer"
           initial={{ opacity: 0 }}
@@ -177,7 +177,7 @@ export function Constellation({
             <h3 className="font-display text-base mb-2">{name}</h3>
             <p className="text-sm text-[var(--purple-300)] mb-3">{tagline}</p>
             <Link to={`/constellation/${id}`}>
-              <button className="text-sm text-white hover:text-[var(--purple-300)] transition-colors">
+              <button className="focus-ring rounded-md text-sm text-white hover:text-[var(--purple-300)] transition-colors">
                 Enter {name} →
               </button>
             </Link>

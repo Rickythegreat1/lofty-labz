@@ -41,7 +41,7 @@ export default function TransmissionDetailPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
+            className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -65,7 +65,7 @@ export default function TransmissionDetailPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-4xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-4xl mx-auto px-6 py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -155,7 +155,7 @@ export default function TransmissionDetailPage() {
                 <Link
                   key={i}
                   to={`/transmissions/${related.slug}`}
-                  className="block group"
+                  className="block group focus-ring rounded-lg"
                 >
                   <div className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all">
                     <div className="flex items-center gap-3 mb-2 font-mono text-xs text-[var(--purple-300)]">
