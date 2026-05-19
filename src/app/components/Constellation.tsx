@@ -12,6 +12,7 @@ interface Star {
 interface ConstellationProps {
   id: string;
   name: string;
+  practice: string;
   tagline: string;
   description: string;
   position: { x: number; y: number };
@@ -25,6 +26,7 @@ interface ConstellationProps {
 export function Constellation({
   id,
   name,
+  practice,
   tagline,
   description,
   position,
@@ -144,24 +146,34 @@ export function Constellation({
         );
       })}
 
-      {/* Constellation name */}
-      <Link to={`/constellation/${id}`} className="focus-ring rounded-md">
+      {/* Constellation name + practice line */}
+      <Link
+        to={`/constellation/${id}`}
+        className="focus-ring rounded-md absolute left-1/2 -translate-x-1/2 top-full mt-8"
+        aria-label={`Enter the ${name} constellation — ${practice}`}
+      >
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-8 text-center cursor-pointer"
+          className="text-center cursor-pointer"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0.3 }}
+          animate={{ opacity: isHovered ? 1 : 0.7 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="font-display text-lg mb-1">{name}</div>
-          {isHovered && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              className="text-xs text-[var(--purple-300)] max-w-[200px]"
-            >
-              {description}
-            </motion.div>
-          )}
+          <div className="font-display text-lg leading-tight">{name}</div>
+          <div className="text-[10px] tracking-[0.18em] uppercase font-mono text-[var(--brass)] mt-1">
+            {practice}
+          </div>
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                className="text-xs text-[var(--lavender-200)] max-w-[220px] mx-auto"
+              >
+                {description}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </Link>
 
