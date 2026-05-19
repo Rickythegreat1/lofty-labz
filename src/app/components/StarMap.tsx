@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Link } from 'react-router';
 import { ConstellationField } from './ConstellationField';
+import { CoordinatesHUD } from './CoordinatesHUD';
 import { Hero } from './Hero';
 import { NorthStar } from './NorthStar';
 import { OptimizedStarfield } from './OptimizedStarfield';
@@ -186,13 +187,12 @@ export function StarMap({ onViewToggle }: StarMapProps) {
         {!heroVisible && (
           <motion.div
             key="coords"
-            className="absolute bottom-8 left-8 z-30 font-mono text-xs text-[var(--purple-300)] hidden md:block"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            LAT 33.4&deg; N &middot; LON 112.1&deg; W &middot; PHX, AZ
+            <CoordinatesHUD mousePosition={mousePosition} />
           </motion.div>
         )}
       </AnimatePresence>

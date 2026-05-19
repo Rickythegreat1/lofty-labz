@@ -68,25 +68,63 @@ export function Constellation({
           {stars.map((star, i) => {
             if (i === 0) return null;
             const prevStar = stars[i - 1];
+            const x1 = (prevStar.x - position.x) * 10;
+            const y1 = (prevStar.y - position.y) * 10;
+            const x2 = (star.x - position.x) * 10;
+            const y2 = (star.y - position.y) * 10;
+
             return (
-              <motion.line
-                key={i}
-                x1={(prevStar.x - position.x) * 10}
-                y1={(prevStar.y - position.y) * 10}
-                x2={(star.x - position.x) * 10}
-                y2={(star.y - position.y) * 10}
-                stroke="var(--purple-300)"
-                strokeWidth="1"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{
-                  pathLength: 1,
-                  opacity: isHovered ? 0.6 : 0.15
-                }}
-                transition={{
-                  pathLength: { duration: 0.6, delay: (i - 1) * 0.05 },
-                  opacity: { duration: 0.3 }
-                }}
-              />
+              <g key={i}>
+                <motion.line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="var(--purple-300)"
+                  strokeWidth="1"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{
+                    pathLength: 1,
+                    opacity: isHovered ? 0.6 : 0.15,
+                  }}
+                  transition={{
+                    pathLength: { duration: 0.6, delay: (i - 1) * 0.05 },
+                    opacity: { duration: 0.3 },
+                  }}
+                />
+                {/*
+                  Phase 3E — brass telemetry pulse. A single short dash slides
+                  along each connecting line of the hovered constellation only.
+                  Non-hovered lines stay at the static 1px / 0.15 opacity
+                  treatment above. Each segment's pulse is staggered so light
+                  appears to flow through the constellation instead of all
+                  segments shimmering in lockstep (which reads as AI slop).
+                */}
+                {isHovered && (
+                  <motion.line
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
+                    stroke="var(--brass)"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    strokeDasharray="8 160"
+                    initial={{ strokeDashoffset: 168, opacity: 0 }}
+                    animate={{
+                      strokeDashoffset: [168, 0],
+                      opacity: [0, 0.85, 0.85, 0],
+                    }}
+                    transition={{
+                      duration: 2.4,
+                      delay: (i - 1) * 0.15,
+                      repeat: Infinity,
+                      ease: 'linear',
+                      times: [0, 0.1, 0.9, 1],
+                    }}
+                  />
+                )}
+              </g>
             );
           })}
         </g>
