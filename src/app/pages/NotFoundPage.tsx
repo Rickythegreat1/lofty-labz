@@ -28,7 +28,7 @@ export default function NotFoundPage() {
             <circle cx="100" cy="100" r="60" fill="var(--purple-500)" opacity="0.3" />
             <rect x="80" y="60" width="40" height="80" fill="var(--purple-700)" />
             <circle cx="100" cy="60" r="20" fill="var(--purple-300)" />
-            <line x1="100" y1="80" x2="100" y2="140" stroke="white" strokeWidth="2" />
+            <line x1="100" y1="80" x2="100" y2="140" stroke="var(--paper)" strokeWidth="2" />
           </svg>
         </motion.div>
 

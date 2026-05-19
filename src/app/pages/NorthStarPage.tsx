@@ -21,8 +21,8 @@ export default function NorthStarPage() {
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 <path d="M50 10 A40 40 0 0 1 50 90 Q35 75 35 50 Q35 25 50 10" fill="var(--purple-500)" stroke="none" />
                 <g transform="translate(42, 35)">
-                  <rect x="5" y="0" width="10" height="3" fill="white" />
-                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="white" strokeWidth="1.5" />
+                  <rect x="5" y="0" width="10" height="3" fill="var(--paper)" />
+                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="var(--paper)" strokeWidth="1.5" />
                 </g>
               </svg>
             </div>

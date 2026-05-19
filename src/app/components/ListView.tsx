@@ -143,8 +143,8 @@ export function ListView({ onViewToggle }: ListViewProps) {
                   stroke="none"
                 />
                 <g transform="translate(42, 35)">
-                  <rect x="5" y="0" width="10" height="3" fill="white" />
-                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="white" strokeWidth="1.5" />
+                  <rect x="5" y="0" width="10" height="3" fill="var(--paper)" />
+                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="var(--paper)" strokeWidth="1.5" />
                 </g>
               </svg>
             </div>
@@ -312,8 +312,8 @@ export function ListView({ onViewToggle }: ListViewProps) {
                   stroke="none"
                 />
                 <g transform="translate(42, 35)">
-                  <rect x="5" y="0" width="10" height="3" fill="white" />
-                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="white" strokeWidth="1.5" />
+                  <rect x="5" y="0" width="10" height="3" fill="var(--paper)" />
+                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="var(--paper)" strokeWidth="1.5" />
                 </g>
               </svg>
             </div>

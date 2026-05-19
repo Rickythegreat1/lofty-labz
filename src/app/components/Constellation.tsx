@@ -116,7 +116,7 @@ export function Constellation({
                 animate={{
                   scale: isActive ? 1.5 : 1,
                   boxShadow: isActive
-                    ? '0 0 20px rgba(255, 255, 255, 0.8)'
+                    ? '0 0 20px rgba(250, 247, 251, 0.85)'
                     : '0 4px 6px rgba(0, 0, 0, 0.1)'
                 }}
               />

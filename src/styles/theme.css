@@ -15,6 +15,18 @@
   --ink-muted: #5b4d6e;
   --brass: #c9a961;
 
+  /* Semantic aliases (Phase 3A) — never paint pure #ffffff in the dark UI. */
+  --star-core: var(--paper);
+  --star-core-glow: rgba(250, 247, 251, 0.85);
+
+  /* Glass + surface tokens used for elevated panels and chrome. */
+  --glass-surface: rgba(45, 31, 71, 0.65);
+  --glass-border: rgba(155, 127, 217, 0.18);
+
+  /* Border intent tokens used by the constellation map and dividers. */
+  --border-subtle: rgba(155, 127, 217, 0.15);
+  --border-active: rgba(155, 127, 217, 0.6);
+
   --background: #0a0612;
   --foreground: var(--paper);
   --card: var(--purple-900);
@@ -92,6 +104,12 @@
 }
 
 @theme inline {
+  /**
+   * Phase 3A: remap Tailwind's `white` palette entry to the brand paper token.
+   * Every `bg-white`, `text-white`, `fill-white`, `stroke-white` class across
+   * the app paints warm cream (#faf7fb) on dark instead of vibrating #ffffff.
+   */
+  --color-white: var(--paper);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
