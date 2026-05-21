@@ -77,7 +77,8 @@ This document is the single source of truth for the *current state* of the site 
 | `src/app/three/StarfieldScene.tsx` | GLSL particle starfield + per-constellation Motif (build/voice/signal/engine/lighthouse/reel). |
 | `src/app/lib/choreography.ts` | Central timing + variants. All animation reads from here. |
 | `src/styles/theme.css` | Brand tokens, `.brass-corner`, `.pull-quote`, `.process-rail`, `.focus-lift`, `.underline-draw`, accordion keyframes, reticle cursor. |
-| `docs/work-audit.md` | Comprehensive work audit (3 rounds). |
+| `docs/work-audit.md` | Comprehensive work audit (5 rounds). |
+| `docs/design-review-with-claude.md` | Practical guide for design review + iteration with Claude (review modes, prompt patterns, what Claude can and can't see). |
 | `docs/interactions.md` | UI interaction inventory (slightly stale — flag for refresh). |
 | `public/lottie/brass-pulse.json` | The first Lottie animation; brand-aligned three-ring pulse. |
 
