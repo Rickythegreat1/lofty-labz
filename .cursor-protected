@@ -19,15 +19,18 @@ index.html                                 :: phase-0 :: standalone entry point 
 package-lock.json                          :: phase-0 :: lockfile committed for reproducible installs after eject
 package.json                               :: phase-0 :: react/react-dom moved from peerDependencies to dependencies for standalone Vite build
 public/.gitkeep                            :: phase-0 :: placeholder so empty public/ stays tracked
-src/app/components/Constellation.tsx       :: phase-3e :: hovered-only brass telemetry pulse on connecting lines (non-hovered stays static)
-src/app/components/ConstellationField.tsx  :: phase-3d :: extracted constellation rendering, sources from data/constellations.ts (closes data drift)
+src/app/components/Constellation.tsx       :: phase-test :: star links use star.id (was name-derived slug; Eddie's Trades 404'd)
+src/app/components/ConstellationField.tsx  :: phase-test :: forward star.id through to the Constellation child
 src/app/components/CoordinatesHUD.tsx      :: phase-3e :: parallax-driven last-digit ticking instrument readout (replaces static LAT/LON string)
 src/app/components/Hero.tsx                :: phase-3d :: first-impression hero panel (replaces 800ms ignition lockup + WelcomePanel)
-src/app/components/ListView.tsx            :: phase-0 :: replaced personal gmail addresses with hello@loftylabz.com
+src/app/components/ListView.tsx            :: phase-test :: imports canonical data from data/constellations.ts (removes inline drift); star links use star.id
 src/app/components/NorthStar.tsx           :: phase-3e :: brass ley line drops from the guarantee mark down into the map (40vh, gradient fade)
 src/app/components/OptimizedStarfield.tsx  :: phase-3e :: two depth layers (200 deep + 30 mid, ×0.25 vs ×0.6 parallax), token-driven color
-src/app/components/StarMap.tsx             :: phase-3d :: composes Hero + ConstellationField + chrome, sources data from constellations.ts, ignition lockup removed
+src/app/components/ScrollProgress.tsx      :: phase-test :: only renders when document scrollHeight > viewport (avoids stuck full-width bar)
+src/app/components/StarMap.tsx             :: phase-test :: sr-only h1 only mounts when hero is dismissed (was duplicated against hero h1)
 src/app/data/constellations.ts             :: phase-3d :: docs updated — inline-array drift in StarMap resolved by 3D refactor
+src/main.tsx                               :: phase-test :: imports styles/index.css (was missing tailwind.css \u2014 utilities never bundled)
+src/styles/tailwind.css                    :: phase-test :: removed broken source(none) directive; tailwind v4 now auto-detects sources
 src/app/components/ui/accordion.tsx        :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by ConstellationPage)
 src/app/components/ui/button.tsx           :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by 5 pages)
 src/app/components/ui/input.tsx            :: phase-0 :: vendored shadcn primitive (missing from Figma Make push, imported by HailingFrequencyPage)

@@ -61,34 +61,37 @@ export default function NorthStarPage() {
           </motion.div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 py-20">
+        <section className="max-w-5xl mx-auto px-6 py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="font-display text-4xl mb-12 text-center">The Promises by Practice</h2>
-            <div className="space-y-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--brass)] mb-3 text-center">
+              By Practice
+            </p>
+            <h2 className="font-display text-4xl mb-16 text-center">The Promises</h2>
+            <ul className="space-y-12">
               {constellations.map((constellation, i) => (
-                <motion.div
+                <motion.li
                   key={constellation.id}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="bg-[var(--purple-900)] border border-[var(--border)] rounded-xl p-8"
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ delay: i * 0.08, duration: 0.5 }}
+                  className="grid md:grid-cols-12 gap-6 items-start"
                 >
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="flex-shrink-0">
-                      <h3 className="font-display text-2xl mb-2">{constellation.name}</h3>
-                      <p className="text-sm text-[var(--purple-300)] font-mono uppercase">{constellation.practice}</p>
-                    </div>
-                    <div className="flex-1">
-                      <div className="bg-[var(--purple-700)]/30 border border-[var(--purple-500)]/30 rounded-lg p-6">
-                        <Shield className="w-6 h-6 text-green-400 mb-3" />
-                        <p className="text-lg text-[var(--lavender-200)] italic leading-relaxed">"{constellation.promise}"</p>
-                      </div>
-                    </div>
+                  <header className="md:col-span-4">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--brass)] mb-2">
+                      {constellation.practice}
+                    </p>
+                    <h3 className="font-display text-2xl leading-tight">{constellation.name}</h3>
+                  </header>
+                  <div className="md:col-span-8 pull-quote">
+                    <Shield className="w-5 h-5 text-[var(--brass)] mb-3" aria-hidden="true" />
+                    <p className="text-lg text-[var(--lavender-200)] leading-relaxed italic">
+                      "{constellation.promise}"
+                    </p>
                   </div>
-                </motion.div>
+                </motion.li>
               ))}
-            </div>
+            </ul>
           </motion.div>
         </section>
 

@@ -48,7 +48,7 @@ export function Hero({ onExploreMap }: HeroProps) {
           <div className="flex flex-wrap items-center gap-x-7 gap-y-5">
             <Link to="/hailing-frequency">
               <motion.button
-                className="focus-ring inline-flex items-center gap-3 h-14 px-7 bg-[var(--paper)] text-[var(--purple-900)] rounded-[var(--radius-button)] font-bold text-base shadow-[inset_0_1px_0_0_var(--brass)]"
+                className="focus-ring focus-lift inline-flex items-center gap-3 h-14 px-7 bg-[var(--paper)] text-[var(--purple-900)] rounded-[var(--radius-button)] font-bold text-base shadow-[inset_0_1px_0_0_var(--brass)]"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98, y: 1 }}
                 transition={springs.press}
@@ -59,7 +59,7 @@ export function Hero({ onExploreMap }: HeroProps) {
             </Link>
             <Link
               to="/the-north-star"
-              className="focus-ring rounded-md text-[var(--lavender-200)] hover:text-[var(--paper)] transition-colors"
+              className="focus-ring focus-lift rounded-md text-[var(--lavender-200)] hover:text-[var(--paper)] transition-colors"
             >
               <span className="underline-draw">or read the guarantee</span> &rarr;
             </Link>
@@ -70,7 +70,7 @@ export function Hero({ onExploreMap }: HeroProps) {
       <motion.button
         type="button"
         onClick={onExploreMap}
-        className="focus-ring rounded-md absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--purple-300)] hover:text-[var(--paper)] transition-colors pointer-events-auto"
+        className="focus-ring focus-lift rounded-md absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--purple-300)] hover:text-[var(--paper)] transition-colors pointer-events-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.4 }}

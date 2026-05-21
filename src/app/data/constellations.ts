@@ -28,6 +28,42 @@ export interface Star {
   date: string;
   projectId: string;
   lead: string;
+  /**
+   * Optional "Receipts" for real projects — verifiable links shown in the
+   * StarPanel. When all four are absent, the case study reads as
+   * documentation-only (placeholders default to this).
+   */
+  liveUrl?: string;
+  repoUrl?: string;
+  figmaUrl?: string;
+  screenshotUrl?: string;
+  /**
+   * Optional brand-aligned hero visual rendered at the top of the StarPanel
+   * content. Each kind maps to a schematic SVG illustration drawn in the
+   * brass-on-dark line-art aesthetic. See StarHeroVisual.tsx.
+   */
+  heroVisual?:
+    | 'cube'
+    | 'dashboard'
+    | 'whiteboard'
+    | 'pipeline'
+    | 'film'
+    | 'snowflake'
+    | 'equations';
+}
+
+/**
+ * Glyph shape descriptor for a constellation. When present, lines are drawn
+ * along the `edges` array instead of the default sequential chain. `anchors`
+ * are non-interactive shape-only points that complete the silhouette where
+ * real case-study stars aren't enough.
+ *
+ * Edge indices reference the combined [stars, ...anchors] list — stars come
+ * first (0..N-1), anchors follow (N..N+M-1).
+ */
+export interface ConstellationShape {
+  anchors: { x: number; y: number }[];
+  edges: [number, number][];
 }
 
 export interface Constellation {
@@ -51,6 +87,12 @@ export interface Constellation {
     name: string;
     description: string;
   }[];
+  /**
+   * Optional glyph descriptor. When present, the constellation renders as a
+   * representational shape (browser frame, megaphone, gear, etc.) rather
+   * than a sequential point chain.
+   */
+  shape?: ConstellationShape;
 }
 
 export const constellations: Constellation[] = [
@@ -109,106 +151,124 @@ export const constellations: Constellation[] = [
     ],
     stars: [
       {
-        id: 'eddies-trades',
-        name: "Eddie's Trades",
-        client: "Eddie's Trades",
-        metric: '+47% lead-form conversion',
-        x: 22,
-        y: 32,
-        hypothesis: 'The existing site was slow, hard to navigate on mobile, and buried the contact form. Client believed this was costing them qualified leads.',
+        // Real project — Champro Merch Builder, the canonical commercial
+        // product. Jersey Builder Pro was its V1 prototype; both are now
+        // captured in this one star per the user's clarification that
+        // they're two iterations of the same project. Positioned at the
+        // top-left corner of the browser-frame glyph (post-merge layout).
+        id: 'champro-merch-builder',
+        name: 'Champro Merch Builder',
+        client: 'Champro',
+        metric: 'In-browser 3D customizer — two iterations, one product',
+        x: 16,
+        y: 30,
+        hypothesis: "Champro's customers needed a self-serve in-browser 3D customizer for uniforms — with the same affordances as a desktop design tool (layers, nudging, undo/redo, mirroring, print-safe areas) and a production-grade handoff so the factory could ingest output without manual rework. Two iterations got us there.",
         baseline: {
-          'Mobile Load Time': '5.8s',
-          'Lead Form Conversion': '1.2%',
-          'Mobile Bounce Rate': '68%',
-          'Monthly Leads': '23'
+          'Customizer': 'No 3D in-browser tool',
+          'Customer iteration': 'Static mockups via email',
+          'Production handoff': 'Manual rework',
+          'Design tooling': 'Legacy / desktop-only'
         },
         intervention: [
-          'Rebuilt site on Next.js with static generation for instant loads',
-          'Redesigned mobile-first with prominent "Get Quote" CTA above fold',
-          'Implemented smart form with service auto-detection',
-          'Added social proof testimonials at decision points',
-          'Set up conversion tracking and heat mapping'
+          'V1 — Jersey Builder Pro prototype: vanilla JS + Vite + Three.js. Proved the in-browser designer affordances — undo/redo with ⌘Z / ⌘⇧Z, layer manager, fine-nudging, mirroring, print-safe overlay, autosave with a visible "Saved" indicator, sr-only live regions + skip-link for accessibility',
+          'V1 shipped with an explicit accessibility audit (docs/a11y-audit.md) and a gap-list (docs/champ-pro-gap-list.md) — the written-deliverables cadence the brand promises',
+          'V2 — commercial Champro Merch Builder: rebuilt on React 19 + @react-three/fiber + zustand store for predictable customizer state',
+          'V2 added touch/trackpad gesture support via @use-gesture/react',
+          'V2 shipped a PDF export pipeline (html2canvas + jspdf) so production receives a deterministic spec sheet',
+          'V2 carries Playwright e2e coverage — every customizer interaction tested before shipping'
         ],
         reading: {
-          'Mobile Load Time': '1.8s (-69%)',
-          'Lead Form Conversion': '1.76% (+47%)',
-          'Mobile Bounce Rate': '42% (-38%)',
-          'Monthly Leads': '41 (+78%)'
+          'Customizer': '3D in-browser shipped',
+          'Customer iteration': 'Real-time, self-serve',
+          'Production handoff': 'PDF export pipeline',
+          'Design tooling': 'React 19 + R3F + Three',
+          'Documentation': 'a11y audit + gap-list (V1)'
         },
         guaranteeOutcome: true,
-        notes: 'The conversion lift exceeded our guarantee. Would add live chat widget earlier in next build.',
+        notes: 'Two iterations of the same product. V1 (Jersey Builder Pro) was the in-browser-designer prototype that proved the affordances; V2 (current Champro Merch Builder) is the commercial React 19 + R3F + PDF-export build. Counted as one star because they\'re iterations of one design intent for one client, not two separate engagements.',
         status: 'shipped',
-        date: '03/12/2026',
-        projectId: 'EXP-2026-014',
-        lead: 'Sanderson'
+        date: '2025-2026',
+        projectId: 'CHPR-2026-001',
+        lead: 'Sanderson',
+        repoUrl: 'https://github.com/Rickythegreat1/Merch-Builder-G',
+        heroVisual: 'cube'
       },
       {
-        id: 'desert-modern-homes',
-        name: 'Desert Modern Homes',
-        client: 'Desert Modern Homes',
-        metric: '2.3s load time',
-        x: 27,
-        y: 35,
-        hypothesis: 'High-resolution architecture photos were killing performance. Client wanted to maintain visual impact without losing potential buyers to slow loads.',
+        // Real project — EduTrack admin dashboard at Crossroads Education
+        // (2017-2020). Position adjusted to (32, 30) for the new browser
+        // frame: top-right corner anchors the right edge.
+        id: 'edutrack-dashboard',
+        name: 'EduTrack',
+        client: 'Crossroads Education',
+        metric: 'School-deployed admin dashboard',
+        x: 32,
+        y: 30,
+        hypothesis: 'Tutors and school administrators were managing scheduling, attendance, and student data through disconnected tools. A unified employee-management + analytics dashboard could replace the manual process with a single source of truth.',
         baseline: {
-          'Desktop Load Time': '6.2s',
-          'Mobile Load Time': '8.9s',
-          'Image Weight': '12.4MB per page',
-          'Bounce Rate': '71%'
+          'Admin workflow': 'Disconnected spreadsheets',
+          'Tutor task management': 'Manual',
+          'Data visibility': 'No real-time view',
+          'Design system': 'None — ad-hoc UI'
         },
         intervention: [
-          'Implemented Next.js Image optimization with WebP/AVIF',
-          'Built lazy-loading gallery with progressive enhancement',
-          'Set up Cloudflare CDN with edge caching',
-          'Created responsive image sets for all viewports',
-          'Added skeleton states for perceived performance'
+          'Designed an Employee Management + Data Analytics Dashboard for tutors and school staff',
+          'Built an atomic-design system shared across two Crossroads products (EduTrack + Nexus)',
+          'Ran user interviews, journey-mapping, and open/closed card sorts with administrators',
+          'Generated personas, wireframes, and prototypes ahead of build',
+          'Owned UI choreography and accessibility decisions through implementation'
         ],
         reading: {
-          'Desktop Load Time': '2.1s (-66%)',
-          'Mobile Load Time': '2.3s (-74%)',
-          'Image Weight': '1.8MB per page (-85%)',
-          'Bounce Rate': '38% (-46%)'
+          'Admin workflow': 'Unified dashboard',
+          'Tutor task management': 'Real-time, task-driven',
+          'Data visibility': 'Live analytics surface',
+          'Design system': 'Atomic, shared across products'
         },
         guaranteeOutcome: true,
-        notes: 'Client initially worried about image quality. A/B testing showed no difference in user preference between optimized and original.',
+        notes: 'Deployed in a school that secured a Bill & Melinda Gates Foundation grant during the engagement. The atomic design system also fed Crossroads Education\'s Nexus product (digital learning platform with interactive whiteboards and tutor queueing).',
         status: 'shipped',
-        date: '01/22/2026',
-        projectId: 'EXP-2026-008',
-        lead: 'Shanks'
+        date: '2017-2020',
+        projectId: 'CRE-2020-002',
+        lead: 'Sanderson',
+        heroVisual: 'dashboard'
       },
       {
-        id: 'phx-coffee-co',
-        name: 'PHX Coffee Co',
-        client: 'PHX Coffee Co',
-        metric: '+89% mobile traffic',
-        x: 24,
-        y: 38,
-        hypothesis: 'Desktop-only site was invisible to the Instagram audience driving most awareness. Needed mobile-native rebuild.',
+        // Real project — Nexus, Crossroads Education's student-tutor live-
+        // session platform. Companion to EduTrack (the admin surface) at
+        // the same employer, same era, shared design system. Positioned
+        // at the bottom-right corner of the browser-frame glyph.
+        id: 'nexus',
+        name: 'Nexus',
+        client: 'Crossroads Education',
+        metric: 'Digital learning platform — student-tutor live sessions',
+        x: 32,
+        y: 42,
+        hypothesis: 'Crossroads Education needed to simulate the in-person tutoring experience online — interactive whiteboards, fair queueing, parity of attention from tutors to students. Without those, online tutoring would feel like a downgrade instead of an option.',
         baseline: {
-          'Mobile Traffic': '18%',
-          'Mobile Conversion': '0.4%',
-          'Instagram Bounce': '82%',
-          'Mobile Speed': 'Unscored'
+          'Tutoring delivery': 'In-person only',
+          'Whiteboard parity': 'No digital equivalent',
+          'Tutor allocation': 'Manual / ad-hoc',
+          'Design system': 'None — ad-hoc UI'
         },
         intervention: [
-          'Rebuilt as Progressive Web App with offline menu',
-          'Added Instagram-style stories for new roasts',
-          'Implemented one-tap ordering from mobile',
-          'Created location-aware store finder',
-          'Optimized for Core Web Vitals'
+          'Designed interactive digital whiteboards with parity for in-person session affordances',
+          'Built a fair tutor-queueing system that matched student demand to tutor availability',
+          'Shared the atomic design system with the EduTrack admin dashboard for cross-product consistency',
+          'Ran user interviews + journey-mapping with students and tutors before build',
+          'Generated personas, wireframes, and prototypes ahead of implementation'
         ],
         reading: {
-          'Mobile Traffic': '34% (+89%)',
-          'Mobile Conversion': '2.1% (+425%)',
-          'Instagram Bounce': '34% (-59%)',
-          'Mobile Speed': '98/100 Lighthouse'
+          'Tutoring delivery': 'Hybrid (in-person + live online)',
+          'Whiteboard parity': 'Digital whiteboards shipped',
+          'Tutor allocation': 'Queueing system',
+          'Design system': 'Atomic, shared with EduTrack'
         },
         guaranteeOutcome: true,
-        notes: 'PWA install rate at 12% of mobile visitors. Considering push notifications for roast drops.',
+        notes: 'Companion product to EduTrack at Crossroads Education (2017-2020). Shared atomic design system across both products: Nexus is the student-tutor live-session surface; EduTrack is the admin / data dashboard.',
         status: 'shipped',
-        date: '02/28/2026',
-        projectId: 'EXP-2026-012',
-        lead: 'Sanderson'
+        date: '2017-2020',
+        projectId: 'CRE-2020-001',
+        lead: 'Sanderson',
+        heroVisual: 'whiteboard'
       }
     ],
     process: [
@@ -242,7 +302,36 @@ export const constellations: Constellation[] = [
         name: 'Care & Optimize',
         description: 'We stay engaged through retainers, monitoring uptime, speed, and opportunities for improvement.'
       }
-    ]
+    ],
+    // Browser-frame glyph, post-merge layout:
+    //   Stars (3, all real Crossroads/Champro work):
+    //     0 — champro-merch-builder  (16, 30) — top-left corner
+    //     1 — edutrack-dashboard     (32, 30) — top-right corner
+    //     2 — nexus                  (32, 42) — bottom-right corner
+    //   Anchors (4):
+    //     a0 idx 3 — (16, 42) bottom-left corner (closes the frame)
+    //     a1 idx 4 — (19, 32) chrome dot 1 (inside top bar)
+    //     a2 idx 5 — (22, 32) chrome dot 2
+    //     a3 idx 6 — (25, 32) chrome dot 3
+    //   Every dot is on at least one edge:
+    //     Frame perimeter: champro → edutrack → nexus → a0 → champro
+    //     Chrome bar: chained chrome dots inside the top bar
+    shape: {
+      anchors: [
+        { x: 16, y: 42 }, // a0 (idx 3): bottom-left corner
+        { x: 19, y: 32 }, // a1 (idx 4): chrome dot 1
+        { x: 22, y: 32 }, // a2 (idx 5): chrome dot 2
+        { x: 25, y: 32 }  // a3 (idx 6): chrome dot 3
+      ],
+      edges: [
+        [0, 1], // top edge: champro → edutrack
+        [1, 2], // right edge: edutrack → nexus
+        [2, 3], // bottom edge: nexus → bottom-left anchor
+        [3, 0], // left edge: bottom-left → champro
+        [4, 5], // chrome chain segment 1
+        [5, 6]  // chrome chain segment 2
+      ]
+    }
   },
   {
     id: 'the-voice',
@@ -304,8 +393,8 @@ export const constellations: Constellation[] = [
         name: 'Bright Path Wellness',
         client: 'Bright Path Wellness',
         metric: '3x social engagement',
-        x: 63,
-        y: 25,
+        x: 72,
+        y: 20,
         hypothesis: 'Generic health/wellness aesthetic made them invisible in a crowded market. Needed differentiation without alienating existing clients.',
         baseline: {
           'Social Engagement Rate': '0.8%',
@@ -338,8 +427,8 @@ export const constellations: Constellation[] = [
         name: 'Valley Ventures',
         client: 'Valley Ventures',
         metric: 'Brand refresh',
-        x: 67,
-        y: 28,
+        x: 72,
+        y: 36,
         hypothesis: '2015-era logo and inconsistent collateral made the firm appear dated to potential investors.',
         baseline: {
           'Pitch Success Rate': '14%',
@@ -372,8 +461,8 @@ export const constellations: Constellation[] = [
         name: 'Local Goods Market',
         client: 'Local Goods Market',
         metric: '+210% brand recall',
-        x: 65,
-        y: 31,
+        x: 60,
+        y: 28,
         hypothesis: 'Name was forgettable. Visual identity looked like every other farmers market. Needed memorable without being gimmicky.',
         baseline: {
           'Aided Brand Recall': '18%',
@@ -433,7 +522,37 @@ export const constellations: Constellation[] = [
         name: 'Implementation Support',
         description: 'We assist with rollout, troubleshoot edge cases, and ensure consistency across touchpoints.'
       }
-    ]
+    ],
+    // Megaphone glyph opening rightward. Star 0 (Bright Path) sits at the
+    // wide-top, star 1 (Valley Ventures) at the wide-bottom, star 2 (Local
+    // Goods) at the handle. Anchors 0-1 close the narrow back, anchors 2-4
+    // are the radiating sound rays.
+    // Megaphone glyph with radiating soundwaves:
+    //   Stars (3): 0 bright-path (72,20) mouth-top, 1 valley-ventures (72,36)
+    //     mouth-bottom, 2 local-goods (60,28) handle.
+    //   Anchors (5): a0(62,25)/a1(62,31) narrow throat, a2(78,22)/a3(80,28)/
+    //     a4(78,34) sound rays radiating from the mouth.
+    // Every dot is now on an edge — the 3 ray dots are reached via new edges
+    // from the mouth-top and mouth-bottom stars (sound emanating).
+    shape: {
+      anchors: [
+        { x: 62, y: 25 }, // a0 (idx 3): narrow back top
+        { x: 62, y: 31 }, // a1 (idx 4): narrow back bottom
+        { x: 78, y: 22 }, // a2 (idx 5): sound ray top
+        { x: 80, y: 28 }, // a3 (idx 6): sound ray middle
+        { x: 78, y: 34 }  // a4 (idx 7): sound ray bottom
+      ],
+      edges: [
+        [2, 3], // handle → narrow-top
+        [3, 0], // narrow-top → mouth-top
+        [0, 1], // mouth-top → mouth-bottom (the mouth)
+        [1, 4], // mouth-bottom → narrow-bottom
+        [4, 2], // narrow-bottom → handle
+        [0, 5], // mouth-top → ray-top (discrete soundwave 1)
+        [0, 6], // mouth-top → ray-middle (discrete soundwave 2)
+        [1, 7]  // mouth-bottom → ray-bottom (discrete soundwave 3)
+      ]
+    }
   },
   {
     id: 'the-signal',
@@ -494,8 +613,8 @@ export const constellations: Constellation[] = [
         name: 'AZ Auto Repair',
         client: 'AZ Auto Repair',
         metric: '12K monthly reach',
-        x: 43,
-        y: 53,
+        x: 45,
+        y: 48,
         hypothesis: 'Auto repair is considered commoditized. Educational content could build trust and differentiate.',
         baseline: {
           'Monthly Reach': '1,200',
@@ -528,7 +647,7 @@ export const constellations: Constellation[] = [
         name: 'Cactus Creative',
         client: 'Cactus Creative',
         metric: '+340% engagement',
-        x: 47,
+        x: 45,
         y: 55,
         hypothesis: 'As a creative agency, their social needed to demonstrate capability, not just describe it.',
         baseline: {
@@ -563,7 +682,7 @@ export const constellations: Constellation[] = [
         client: 'Phoenix Fitness',
         metric: '800+ leads/month',
         x: 45,
-        y: 58,
+        y: 62,
         hypothesis: 'Gym content is saturated. Needed a hook that cut through—chose hyper-local Phoenix fitness culture.',
         baseline: {
           'Leads/Month': '67',
@@ -623,7 +742,36 @@ export const constellations: Constellation[] = [
         name: 'Iteration & Scale',
         description: 'We double down on what works, kill what doesn\'t, and compound growth over time.'
       }
-    ]
+    ],
+    // Broadcast tower glyph: star 0 (AZ Auto Repair) is the antenna tip,
+    // star 1 (Cactus Creative) is the central junction, star 2 (Phoenix
+    // Fitness) is the base. Anchors 0-1 are the horizontal crossbeam,
+    // anchors 2-3 are the splayed feet, anchors 4-5 are signal pulses.
+    // Broadcast-tower glyph with antenna pulses:
+    //   Stars (3): 0 antenna (45,48), 1 hub (45,55), 2 base (45,62).
+    //   Anchors (6): a0/a1 crossbeams, a2/a3 feet, a4/a5 signal pulses.
+    // New edges: antenna → both pulse anchors so the broadcast is rendered
+    // as lines emitting upward-outward instead of two floating dots.
+    shape: {
+      anchors: [
+        { x: 42, y: 55 }, // a0 (idx 3): left crossbeam
+        { x: 48, y: 55 }, // a1 (idx 4): right crossbeam
+        { x: 42, y: 62 }, // a2 (idx 5): left foot
+        { x: 48, y: 62 }, // a3 (idx 6): right foot
+        { x: 40, y: 51 }, // a4 (idx 7): left signal pulse
+        { x: 50, y: 51 }  // a5 (idx 8): right signal pulse
+      ],
+      edges: [
+        [0, 1], // spine top (antenna → hub)
+        [1, 2], // spine bottom (hub → base)
+        [3, 1], // left crossbeam → hub
+        [1, 4], // hub → right crossbeam
+        [5, 2], // left foot → base
+        [2, 6], // base → right foot
+        [0, 7], // antenna → left signal pulse (NEW: broadcast emission)
+        [0, 8]  // antenna → right signal pulse (NEW: broadcast emission)
+      ]
+    }
   },
   {
     id: 'the-engine',
@@ -680,45 +828,50 @@ export const constellations: Constellation[] = [
     ],
     stars: [
       {
-        id: 'invoice-automator',
-        name: 'Invoice Automator',
-        client: 'Desert HVAC Solutions',
-        metric: '40hrs saved/month',
-        x: 73,
-        y: 63,
-        hypothesis: 'Manual invoice creation from field notes was costing 10+ hours/week and introducing errors.',
+        // Real project — Champro Asset Pipeline. Python utility that
+        // extracted and downloaded GLB model URLs from a source manifest,
+        // populating the Merch Builder's asset library. Replaces a
+        // fictional placeholder; positioned at the top of the Engine's
+        // gear glyph.
+        id: 'champro-asset-pipeline',
+        name: 'Champro Asset Pipeline',
+        client: 'Champro (internal tooling)',
+        metric: 'GLB ingestion automated',
+        x: 75,
+        y: 60,
+        hypothesis: 'Manual asset prep was the bottleneck on every new product drop for the Champro Merch Builder. Each GLB needed URL extraction, validation, and download into the customizer asset library — a tedious step prone to copy-paste errors.',
         baseline: {
-          'Invoice Creation Time': '45min/invoice',
-          'Monthly Time Cost': '52 hours',
-          'Invoice Error Rate': '8%',
-          'Late Payment Rate': '34%'
+          'Asset prep': 'Manual per-product',
+          'URL extraction': 'Copy-paste from source',
+          'Download integrity': 'Spot-checked',
+          'Tooling': 'None'
         },
         intervention: [
-          'Built field app for technicians to log work',
-          'Created auto-invoice generation from logs',
-          'Integrated with QuickBooks for sync',
-          'Added automated payment reminders',
-          'Set up admin dashboard for oversight'
+          'Wrote `extract_all_models.py` to parse the source manifest into a clean URL list',
+          'Wrote `download_models.py` to batch-pull every GLB with integrity checks',
+          'Centralized output into a versioned `models/` directory for the customizer',
+          'Stashed `extracted_urls.json` as a source-of-truth manifest the next drop can diff against'
         ],
         reading: {
-          'Invoice Creation Time': '4min/invoice (-91%)',
-          'Monthly Time Cost': '12 hours (-77%)',
-          'Invoice Error Rate': '0.8% (-90%)',
-          'Late Payment Rate': '14% (-59%)'
+          'Asset prep': 'Scripted, one command',
+          'URL extraction': 'Automated',
+          'Download integrity': 'Per-file verification',
+          'Tooling': 'Python pipeline'
         },
         guaranteeOutcome: true,
-        notes: 'Payback period was 3.2 months. Client now wants to expand to scheduling automation.',
+        notes: 'Internal supporting work for the Champro Merch Builder commercial build. Removes a manual step from every product drop.',
         status: 'shipped',
-        date: '01/29/2026',
-        projectId: 'EXP-2026-009',
-        lead: 'Sanderson'
+        date: '2025-2026',
+        projectId: 'CHPR-PIPE-001',
+        lead: 'Sanderson',
+        heroVisual: 'pipeline'
       },
       {
         id: 'lead-qualifier-ai',
         name: 'Lead Qualifier AI',
         client: 'Scottsdale Solar',
         metric: '85% accuracy',
-        x: 77,
+        x: 80,
         y: 65,
         hypothesis: 'Sales team was spending hours qualifying leads that would never convert. AI could pre-qualify.',
         baseline: {
@@ -753,7 +906,7 @@ export const constellations: Constellation[] = [
         client: 'Valley Real Estate Group',
         metric: '10x output',
         x: 75,
-        y: 68,
+        y: 70,
         hypothesis: 'Content creation bottleneck was limiting growth. AI-assisted workflow could scale without hiring.',
         baseline: {
           'Blog Posts/Month': '2',
@@ -813,7 +966,40 @@ export const constellations: Constellation[] = [
         name: 'Optimize & Expand',
         description: 'We fine-tune based on real usage, then identify next automation opportunities.'
       }
-    ]
+    ],
+    // Gear glyph: 8 outer teeth on an octagonal ring + a center hub.
+    // Star 0 (Champro Asset Pipeline) is the top tooth, star 1 (Lead
+    // Qualifier AI) is the right tooth, star 2 (Content Pipeline) is the
+    // bottom tooth. Anchors 0-4 fill the remaining teeth, anchor 5 is the
+    // dimmer center hub.
+    // Gear glyph with center hub now connected by spokes:
+    //   Stars (3): 0 top (75,60), 1 right (80,65), 2 bottom (75,70).
+    //   Anchors (6): a0-a4 — five more teeth around the perimeter; a5 — center hub.
+    // The hub was previously a free-floating brass dot. Three spokes now
+    // run from each real star to the hub, reinforcing the gear metaphor.
+    shape: {
+      anchors: [
+        { x: 70, y: 65 }, // a0 (idx 3): left tooth
+        { x: 79, y: 61 }, // a1 (idx 4): top-right tooth
+        { x: 79, y: 69 }, // a2 (idx 5): bottom-right tooth
+        { x: 71, y: 69 }, // a3 (idx 6): bottom-left tooth
+        { x: 71, y: 61 }, // a4 (idx 7): top-left tooth
+        { x: 75, y: 65 }  // a5 (idx 8): center hub — now on 3 spokes
+      ],
+      edges: [
+        [0, 4], // top → top-right
+        [4, 1], // top-right → right
+        [1, 5], // right → bottom-right
+        [5, 2], // bottom-right → bottom
+        [2, 6], // bottom → bottom-left
+        [6, 3], // bottom-left → left
+        [3, 7], // left → top-left
+        [7, 0], // top-left → top (closes octagon)
+        [0, 8], // top star → hub (NEW: spoke)
+        [1, 8], // right star → hub (NEW: spoke)
+        [2, 8]  // bottom star → hub (NEW: spoke)
+      ]
+    }
   },
   {
     id: 'the-lighthouse',
@@ -874,8 +1060,8 @@ export const constellations: Constellation[] = [
         name: 'Scottsdale Medical',
         client: 'Scottsdale Medical Center',
         metric: '99.9% uptime',
-        x: 13,
-        y: 66,
+        x: 15,
+        y: 64,
         hypothesis: 'Previous agency disappeared after launch. Needed reliable ongoing partner for patient portal.',
         baseline: {
           'Uptime': '97.2%',
@@ -908,7 +1094,7 @@ export const constellations: Constellation[] = [
         name: 'Desert Dining',
         client: 'Desert Dining Group',
         metric: 'Monthly updates',
-        x: 17,
+        x: 15,
         y: 68,
         hypothesis: 'Restaurant group needed constant menu, hours, and promotion updates but had no technical staff.',
         baseline: {
@@ -943,7 +1129,7 @@ export const constellations: Constellation[] = [
         client: 'Valley Tech Hub',
         metric: '24hr support',
         x: 15,
-        y: 71,
+        y: 76,
         hypothesis: 'Co-working space platform needed always-on support for member-facing features.',
         baseline: {
           'Support Availability': '9-5 weekdays',
@@ -1003,7 +1189,249 @@ export const constellations: Constellation[] = [
         name: 'Strategic Planning',
         description: 'We participate in quarterly planning to align technology with business goals.'
       }
-    ]
+    ],
+    // Lighthouse-tower glyph: vertical spine + splayed feet + three beam
+    // rays now connected to the lantern.
+    //   Stars (3): 0 lantern (15,64), 1 gallery (15,68), 2 base (15,76).
+    //   Anchors (5): a0/a1 splayed feet, a2/a3/a4 beam dots radiating to
+    //   the upper-right of the lantern.
+    // The 3 beam dots were previously free-floating; they're now reached
+    // by light-ray edges emitted from the lantern (star 0).
+    shape: {
+      anchors: [
+        { x: 12, y: 76 }, // a0 (idx 3): left foot
+        { x: 18, y: 76 }, // a1 (idx 4): right foot
+        { x: 22, y: 60 }, // a2 (idx 5): beam dot 1 (highest)
+        { x: 24, y: 64 }, // a3 (idx 6): beam dot 2
+        { x: 22, y: 68 }  // a4 (idx 7): beam dot 3 (lowest)
+      ],
+      edges: [
+        [0, 1], // lantern → gallery
+        [1, 2], // gallery → base
+        [3, 2], // left foot → base
+        [2, 4], // base → right foot
+        [0, 5], // lantern → beam dot 1 (NEW: light ray)
+        [0, 6], // lantern → beam dot 2 (NEW: light ray)
+        [0, 7]  // lantern → beam dot 3 (NEW: light ray)
+      ]
+    }
+  },
+  {
+    // Sixth constellation — added in round-2 audit when three real motion
+    // projects (Easy Ice, Podunkton, IUPUI Math Center) surfaced that
+    // didn't fit Build/Voice/Signal/Engine/Lighthouse. Per the user's
+    // standing rule: add a new constellation when ≥3 real projects share
+    // a coherent practice outside the existing five.
+    id: 'the-reel',
+    name: 'The Reel',
+    practice: 'Motion design & animation',
+    tagline: 'Motion that carries meaning, not decoration.',
+    description: 'Animation, motion graphics, content production — story told in time.',
+    position: { x: 50, y: 85 },
+    promise: "If the motion doesn't communicate state, hierarchy, or relationship inside 5 seconds of viewing, we cut it. No decoration billed as direction.",
+    offerings: [
+      {
+        name: 'Brand Motion Loop',
+        priceRange: '$3K - $8K',
+        scope: 'Short-form looping motion (social / web hero)',
+        timeline: '2-3 weeks',
+        details: [
+          'Brand voice + motion vocabulary discovery',
+          'Storyboard + animatic',
+          '5-15 second loops, multi-aspect-ratio export',
+          'Sound design pass',
+          '2 rounds of revisions',
+          'Source files + delivery preset'
+        ]
+      },
+      {
+        name: 'Explainer / Product Motion',
+        priceRange: '$10K - $25K',
+        scope: '60-120 second 2D animation',
+        timeline: '5-8 weeks',
+        details: [
+          'Script + voice-over coordination',
+          'Storyboard + animatic with sound',
+          'Custom illustration + rigged animation',
+          'Music + sound design',
+          'Captions + accessibility delivery',
+          'Multi-platform export specs'
+        ]
+      },
+      {
+        name: 'Motion System',
+        priceRange: '$12K - $30K',
+        scope: 'Motion language for a product or brand',
+        timeline: '6-10 weeks',
+        details: [
+          'Audit existing motion + brand context',
+          'Define easing curves, durations, vocabulary',
+          'Reference library + Lottie / video deliverables',
+          'Engineering handoff documentation',
+          'Implementation guidance for in-product motion',
+          'Quarterly governance review (first year)'
+        ]
+      }
+    ],
+    stars: [
+      {
+        // Real project — Easy Ice animation work. Featured on the user's
+        // Wix portfolio as a recent project; companion `easyicev2-l8tyl0`
+        // FlutterFlow repo on GitHub suggests an app component too.
+        id: 'easy-ice',
+        name: 'Easy Ice',
+        client: 'Easy Ice',
+        metric: 'Brand motion shipped',
+        x: 50,
+        y: 77,
+        hypothesis: 'Easy Ice needed brand-aligned motion for short-form social and web placements that read as their own — not as stock animation lightly tinted with brand colors.',
+        baseline: {
+          'Motion library': 'Stock placeholders',
+          'Brand consistency': 'Inconsistent across placements',
+          'Production cadence': 'Per-asset bespoke'
+        },
+        intervention: [
+          'Discovery on Easy Ice brand voice + competitive motion landscape',
+          'Designed a small motion vocabulary (easing, timing, transitions) the brand can reuse',
+          'Animated brand-aligned short-form loops for social + web',
+          'Coordinated multi-aspect-ratio delivery'
+        ],
+        reading: {
+          'Motion library': 'Brand-owned vocabulary shipped',
+          'Brand consistency': 'Coherent across placements',
+          'Production cadence': 'Reusable system'
+        },
+        guaranteeOutcome: true,
+        notes: 'Featured project on rickymsanderson5.wixsite.com. The FlutterFlow companion repo on GitHub is open for follow-on app work.',
+        status: 'shipped',
+        date: '2025',
+        projectId: 'EZICE-2025-001',
+        lead: 'Sanderson',
+        heroVisual: 'snowflake'
+      },
+      {
+        // Real project — Podunkton 2D animation. Junior animator + production
+        // assistant credit (early-career role, disclosed honestly here).
+        id: 'podunkton-2d',
+        name: 'Podunkton',
+        client: 'Podunkton',
+        metric: 'Junior animator credit · 2D series',
+        x: 44,
+        y: 91,
+        hypothesis: 'The Podunkton series needed additional 2D animation capacity to hit episodic delivery without compromising hand-drawn craft.',
+        baseline: {
+          'Series capacity': 'Lean team',
+          'Pipeline': 'Established',
+          'Role required': 'Junior animator + production assist'
+        },
+        intervention: [
+          'Inbetweens + clean-up on assigned 2D shots',
+          'Production assist: file management, asset packaging, render coordination',
+          'Worked inside an existing senior-led pipeline'
+        ],
+        reading: {
+          'Shots contributed': 'Per-episode quota met',
+          'Pipeline impact': 'No regressions introduced',
+          'Role progression': 'Junior credit on shipped series'
+        },
+        guaranteeOutcome: true,
+        notes: 'Early-career junior role — included to document the practice depth, not framed as senior work. Honest portfolio over inflated credits.',
+        status: 'shipped',
+        date: '2017-2018',
+        projectId: 'PDKT-2D-001',
+        lead: 'Sanderson',
+        heroVisual: 'film'
+      },
+      {
+        // Real project — three years of student-facing animation at IUPUI's
+        // Math Assistance Center. The longest motion engagement on record.
+        id: 'iupui-math-center',
+        name: 'IUPUI Math Assistance Center',
+        client: 'IUPUI Math Assistance Center',
+        metric: '3 years of student-facing animation',
+        x: 56,
+        y: 91,
+        hypothesis: 'The Math Assistance Center needed informative + engaging content to reach IUPUI students about resources and services — written copy alone wasn\'t landing.',
+        baseline: {
+          'Outreach format': 'Static flyers + email',
+          'Student engagement': 'Low',
+          'Production capacity': 'None in-house'
+        },
+        intervention: [
+          'Wrote + scripted content for student-facing animations',
+          'Recorded voice-overs and composed/recorded original music',
+          'Designed icons + visual systems tied to math-tutoring topics',
+          'Animated in After Effects and Adobe Flash',
+          'Filmed + edited supporting live-action material'
+        ],
+        reading: {
+          'Outreach format': 'Animated content library',
+          'Student engagement': 'Multi-channel reach',
+          'Production capacity': 'In-house pipeline built'
+        },
+        guaranteeOutcome: true,
+        notes: '2014–2017. End-to-end ownership: writing → score → animation → delivery. Foundational motion-design experience.',
+        status: 'shipped',
+        date: '2014-2017',
+        projectId: 'IUPUI-MAC-001',
+        lead: 'Sanderson',
+        heroVisual: 'equations'
+      }
+    ],
+    process: [
+      {
+        step: 1,
+        name: 'Brief & Reference',
+        description: 'We capture the message, the audience, and references for tone. The motion brief is one page or less.'
+      },
+      {
+        step: 2,
+        name: 'Storyboard',
+        description: 'Frames on paper. Beats are decided before any motion happens.'
+      },
+      {
+        step: 3,
+        name: 'Animatic',
+        description: 'Storyboard set to timing. We confirm pacing before final animation begins.'
+      },
+      {
+        step: 4,
+        name: 'Animation',
+        description: 'Final animation built in the right tool for the job (After Effects, hand-drawn, Lottie, or in-product motion code).'
+      },
+      {
+        step: 5,
+        name: 'Sound + Polish',
+        description: 'Sound design and music timed to motion. Final passes for legibility, captions, and accessibility.'
+      },
+      {
+        step: 6,
+        name: 'Delivery & Iterations',
+        description: 'Multi-platform export, captions, source files. Two iteration rounds included.'
+      }
+    ],
+    // Film-reel glyph: 3 star points around a hexagonal rim + 3 spokes to
+    // a central spindle. The rim is closed with 2 brass anchors at the
+    // left and right poles. Combined points list (stars 0-2 + anchors
+    // 3-5): 0 easy-ice top, 1 podunkton-2d bottom-left, 2 iupui bottom-
+    // right, 3 left anchor, 4 right anchor, 5 center spindle.
+    shape: {
+      anchors: [
+        { x: 43, y: 84 }, // a0: left rim anchor (idx 3)
+        { x: 57, y: 84 }, // a1: right rim anchor (idx 4)
+        { x: 50, y: 85 }  // a2: center spindle (idx 5)
+      ],
+      edges: [
+        [0, 4], // top → right rim
+        [4, 2], // right rim → bottom-right
+        [2, 1], // bottom-right → bottom-left
+        [1, 3], // bottom-left → left rim
+        [3, 0], // left rim → top
+        [0, 5], // top → spindle
+        [1, 5], // bottom-left → spindle
+        [2, 5]  // bottom-right → spindle
+      ]
+    }
   }
 ];
 

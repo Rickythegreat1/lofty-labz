@@ -316,4 +316,114 @@
   .group:hover .underline-draw::after {
     transform: scaleX(1);
   }
+
+  /**
+   * Accordion content open/close — fixes the silently-broken
+   * data-[state=closed]:animate-accordion-up / data-[state=open]:animate-accordion-down
+   * references in ui/accordion.tsx. Radix sets --radix-accordion-content-height
+   * on the content node; we animate from 0 to that height (and back).
+   */
+  @keyframes accordion-down {
+    from { height: 0; opacity: 0; }
+    to { height: var(--radix-accordion-content-height); opacity: 1; }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); opacity: 1; }
+    to { height: 0; opacity: 0; }
+  }
+  .animate-accordion-down {
+    animation: accordion-down 220ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .animate-accordion-up {
+    animation: accordion-up 180ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /**
+   * `.brass-corner` — instrument-panel corner marks. Two pseudo-element
+   * brackets at top-left and bottom-right of a container, 14px each, brass.
+   * Replaces full `border + rounded` chrome on detail sections so the eye
+   * lands on type, not on a box.
+   */
+  .brass-corner {
+    position: relative;
+  }
+  .brass-corner::before,
+  .brass-corner::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--brass);
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .brass-corner::before {
+    top: 0;
+    left: 0;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  .brass-corner::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
+
+  /**
+   * Focus-visible motion parity — keyboard focus gets the same 1px lift
+   * as a hover, so keyboard users see the same affordance feedback as
+   * mouse users. Composes with `.focus-ring` (the brass outline).
+   */
+  .focus-lift:focus-visible {
+    transform: translateY(-1px);
+    transition: transform 180ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /**
+   * Brass reticle cursor for the map area. 24x24 SVG: centered dot + four
+   * corner ticks. Reverts to system cursor outside `.cursor-reticle`
+   * regions, and `cursor: pointer` overrides for interactive children
+   * (stars, buttons) win as usual.
+   */
+  .cursor-reticle {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='12' cy='12' r='1.2' fill='%23c9a961'/><path d='M12 2v4M12 18v4M2 12h4M18 12h4' stroke='%23c9a961' stroke-width='1' fill='none' opacity='0.7'/></svg>") 12 12, crosshair;
+  }
+
+  /**
+   * Pull-quote treatment for the Promise on each constellation. Brass
+   * left-rule replaces the prior `bg-glass-surface rounded-2xl border` card.
+   */
+  .pull-quote {
+    border-left: 2px solid var(--brass);
+    padding-left: 1.5rem;
+    font-style: italic;
+  }
+
+  /**
+   * Process-rail divider. A 1px dashed brass line drawn between numbered
+   * step glyphs in the new (cardless) process layout.
+   */
+  .process-rail {
+    position: relative;
+  }
+  .process-rail::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background-image: linear-gradient(
+      to right,
+      var(--brass) 0,
+      var(--brass) 4px,
+      transparent 4px,
+      transparent 10px
+    );
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+    opacity: 0.35;
+    pointer-events: none;
+  }
 }

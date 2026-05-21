@@ -3,12 +3,22 @@ import Root from './layouts/Root';
 import HomePage from './pages/HomePage';
 
 /**
- * Phase 4 / #39 — code-split every non-landing route.
+ * Routing model after the in-place rewrite.
  *
- * HomePage stays eager because it's the entry-point experience and we don't
- * want to pay a chunk-fetch latency cost on first paint. Everything else
- * routes through `lazy: async ()` so the initial bundle only ships the
- * landing star-map shell and each detail page arrives just-in-time.
+ *   /                                    -> map view
+ *   /constellation/:slug                 -> map with `slug` constellation expanded
+ *   /constellation/:slug/star/:starSlug  -> expanded constellation + star panel open
+ *   /star/:slug                          -> legacy redirect path; StarMap resolves
+ *                                           the star's parent constellation and
+ *                                           opens both. Kept so old shared links
+ *                                           still land somewhere coherent.
+ *
+ * The StarMap reads URL params via useParams() and derives its state. There
+ * is no separate ConstellationPage or StarPage anymore — they're modes of
+ * the same component.
+ *
+ * HomePage stays eager because it serves all four URL shapes above and the
+ * landing experience must not pay a chunk-fetch latency cost.
  */
 const lazyDefault = (loader: () => Promise<{ default: React.ComponentType<unknown> }>) =>
   async () => ({ Component: (await loader()).default });
@@ -19,13 +29,11 @@ export const router = createBrowserRouter([
     Component: Root,
     children: [
       { index: true, Component: HomePage },
+      { path: 'constellation/:slug', Component: HomePage },
+      { path: 'constellation/:slug/star/:starSlug', Component: HomePage },
       {
-        path: 'constellation/:slug',
-        lazy: lazyDefault(() => import('./pages/ConstellationPage')),
-      },
-      {
-        path: 'star/:slug',
-        lazy: lazyDefault(() => import('./pages/StarPage')),
+        path: 'star/:legacyStarSlug',
+        lazy: lazyDefault(() => import('./pages/StarRedirect')),
       },
       {
         path: 'the-north-star',

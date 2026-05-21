@@ -36,3 +36,11 @@ lerna-debug.log*
 
 # Vite
 .vite
+
+# Playwright
+test-results
+playwright-report
+/playwright/.cache
+
+# Per-user dev tooling (Claude Code launch configs, Cursor caches, etc.)
+.claude/
