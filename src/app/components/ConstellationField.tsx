@@ -21,7 +21,7 @@ interface ConstellationFieldProps {
 /**
  * The constellation cluster field.
  *
- * Owns rendering of all five constellations from the single source-of-truth
+ * Owns rendering of all six constellations from the single source-of-truth
  * data layer. When `expandedId` is set, that constellation lifts to center
  * and siblings dim + drift outward.
  */

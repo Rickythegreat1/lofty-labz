@@ -43,7 +43,7 @@ export function Hero({ onExploreMap }: HeroProps) {
             A digital lab in Phoenix. Every engagement, in writing.
           </h1>
           <p className="text-lg md:text-[22px] leading-snug text-[var(--lavender-200)] mb-10 max-w-[520px]">
-            Five practices, one written guarantee. Phoenix-based.
+            Six practices, one written guarantee. Phoenix-based.
           </p>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-5">
             <Link to="/hailing-frequency">

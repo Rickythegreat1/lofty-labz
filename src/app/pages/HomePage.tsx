@@ -27,7 +27,7 @@ export default function HomePage() {
       ? `${star.client} · ${star.metric}. A guaranteed outcome from the ${expanded.name} practice.`
       : expanded
       ? `${expanded.tagline} — ${expanded.description}`
-      : 'Lofty Labz is a Phoenix digital agency. Five practices, one written guarantee on every engagement.',
+      : 'Lofty Labz is a Phoenix digital agency. Six practices, one written guarantee on every engagement.',
   });
 
   const [searchParams, setSearchParams] = useSearchParams();
