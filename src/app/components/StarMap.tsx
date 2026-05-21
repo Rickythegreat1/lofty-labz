@@ -196,7 +196,7 @@ export function StarMap({ onViewToggle }: StarMapProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-screen overflow-hidden bg-[#0a0612] cursor-reticle"
+      className="relative w-full h-screen overflow-hidden bg-[var(--background)] cursor-reticle"
       onMouseMove={handleMouseMove}
     >
       {!heroVisible && (

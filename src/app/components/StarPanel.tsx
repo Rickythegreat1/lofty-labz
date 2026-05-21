@@ -53,13 +53,13 @@ export function StarPanel({ constellation, starId, onClose }: StarPanelProps) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="fixed top-0 right-0 z-50 h-screen w-[min(640px,92vw)] bg-[#0a0612]/95 backdrop-blur-xl border-l border-[var(--glass-border)] shadow-2xl overflow-y-auto"
+      className="fixed top-0 right-0 z-50 h-screen w-[min(640px,92vw)] bg-[var(--background)]/95 backdrop-blur-xl border-l border-[var(--glass-border)] shadow-2xl overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="star-panel-heading"
     >
       {/* Panel header — brass top edge mirrors .cta-block vocabulary. */}
-      <header className="sticky top-0 z-10 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)] px-8 py-5 flex items-center justify-between">
+      <header className="sticky top-0 z-10 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)] px-8 py-5 flex items-center justify-between">
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--brass)] mb-1 truncate">
             {constellation.name} · {star.projectId}
@@ -339,7 +339,7 @@ function ComparisonColumn({
   emphasis?: boolean;
 }) {
   return (
-    <div className="bg-[#0a0612] p-5">
+    <div className="bg-[var(--background)] p-5">
       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--brass)] mb-3">
         {label}
       </p>

@@ -58,7 +58,7 @@ export function ProcessFlow({ phases }: ProcessFlowProps) {
               transition={{ delay: i * 0.08 + 0.2, duration: 0.4 }}
             >
               <span
-                className="w-14 h-14 rounded-full border border-[var(--brass)] bg-[#0a0612] flex items-center justify-center font-mono text-sm text-[var(--brass)] mb-3"
+                className="w-14 h-14 rounded-full border border-[var(--brass)] bg-[var(--background)] flex items-center justify-center font-mono text-sm text-[var(--brass)] mb-3"
                 aria-hidden="true"
               >
                 {phase.phase}

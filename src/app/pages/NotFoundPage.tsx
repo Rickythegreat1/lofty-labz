@@ -11,7 +11,7 @@ export default function NotFoundPage() {
   });
 
   return (
-    <main id="main-content" className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center relative overflow-hidden">
+    <main id="main-content" className="min-h-screen bg-[var(--background)] text-white flex items-center justify-center relative overflow-hidden">
       <div className="absolute inset-0" aria-hidden="true">
         {[...Array(20)].map((_, i) => (
           <motion.div

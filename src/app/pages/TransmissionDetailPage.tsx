@@ -22,7 +22,7 @@ export default function TransmissionDetailPage() {
 
   if (!transmission) {
     return (
-      <div className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--background)] text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-display mb-4">Transmission not found</h1>
           <Link to="/transmissions" className="text-[var(--purple-300)] hover:text-white">
@@ -40,14 +40,14 @@ export default function TransmissionDetailPage() {
   const recentTransmissions = getRecentTransmissions(3).filter(t => t.id !== transmission.id);
 
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white">
+    <div className="min-h-screen bg-[var(--background)] text-white">
       {/* Ambient Background */}
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--purple-900)] to-transparent" />
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}

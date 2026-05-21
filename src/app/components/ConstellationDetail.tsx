@@ -325,7 +325,7 @@ export function ConstellationDetail({
               const StepIcon = iconForProcess(step.name);
               return (
               <div key={step.step} className="relative pl-12">
-                <div className="absolute left-0 top-0 w-10 h-10 rounded-full border border-[var(--brass)] flex items-center justify-center font-mono text-sm text-[var(--brass)] bg-[#0a0612]">
+                <div className="absolute left-0 top-0 w-10 h-10 rounded-full border border-[var(--brass)] flex items-center justify-center font-mono text-sm text-[var(--brass)] bg-[var(--background)]">
                   {String(step.step).padStart(2, '0')}
                 </div>
                 <div className="flex items-center gap-2 mb-1">

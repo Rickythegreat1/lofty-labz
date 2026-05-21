@@ -88,8 +88,8 @@ function ConstellationRow({ constellation }: { constellation: ConstellationListE
 
 export function ListView({ onViewToggle }: ListViewProps) {
   return (
-    <div className="min-h-screen bg-[#0a0612] text-[var(--paper)]">
-      <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--paper)]">
+      <header className="sticky top-0 z-50 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10">
