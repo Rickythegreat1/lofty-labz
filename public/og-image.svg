@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1a1426"/>
+      <stop offset="100%" stop-color="#0a0612"/>
+    </radialGradient>
+    <linearGradient id="brassLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c9a961" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#c9a961" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect y="0" width="1200" height="2" fill="url(#brassLine)"/>
+  <g transform="translate(120, 220)">
+    <path d="M50 18 A52 52 0 0 1 50 122 Q26 100 26 70 Q26 40 50 18" fill="#4f2c9c"/>
+    <g transform="translate(38, 58)">
+      <rect x="9" y="0" width="18" height="5" fill="#faf7fb"/>
+      <path d="M9 5 L9 27 Q18 32 27 27 L27 5" fill="none" stroke="#faf7fb" stroke-width="2.5"/>
+    </g>
+  </g>
+  <text x="220" y="320" fill="#faf7fb" font-family="Archivo Black, sans-serif" font-size="84" font-weight="900" letter-spacing="-1">LOFTY LABZ</text>
+  <text x="220" y="380" fill="#d8c9ea" font-family="DM Sans, sans-serif" font-size="32" font-weight="400">A digital lab in Phoenix.</text>
+  <text x="220" y="420" fill="#c9a961" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="3" text-transform="uppercase">EVERY ENGAGEMENT BACKED IN WRITING</text>
+</svg>

@@ -1,11 +1,18 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import { Home } from 'lucide-react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function NotFoundPage() {
+  useDocumentMeta({
+    title: 'Lost coordinates · Lofty Labz',
+    description:
+      'This route is not on the Lofty Labz star map. Return to the home view to find what you were looking for.',
+  });
+
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0">
+    <main id="main-content" className="min-h-screen bg-[var(--background)] text-white flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0" aria-hidden="true">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -28,23 +35,25 @@ export default function NotFoundPage() {
             <circle cx="100" cy="100" r="60" fill="var(--purple-500)" opacity="0.3" />
             <rect x="80" y="60" width="40" height="80" fill="var(--purple-700)" />
             <circle cx="100" cy="60" r="20" fill="var(--purple-300)" />
-            <line x1="100" y1="80" x2="100" y2="140" stroke="white" strokeWidth="2" />
+            <line x1="100" y1="80" x2="100" y2="140" stroke="var(--paper)" strokeWidth="2" />
           </svg>
         </motion.div>
 
-        <h1 className="font-display text-8xl md:text-9xl mb-4 text-[var(--purple-300)]">404</h1>
+        <h1 className="font-display text-8xl md:text-9xl mb-4 text-[var(--brass)]">404</h1>
         <h2 className="font-display text-4xl md:text-5xl mb-6">You're between stars</h2>
         <p className="text-xl text-[var(--lavender-200)] mb-12 max-w-md mx-auto">Nothing here. The telescope has drifted off course.</p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to="/">
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold transition-colors">
+            <button className="focus-ring inline-flex items-center gap-2 px-8 py-4 bg-[var(--purple-500)] hover:bg-[var(--purple-700)] text-white rounded-lg font-bold transition-colors">
               <Home className="w-5 h-5" />
               Return to map
             </button>
           </Link>
           <Link to="/?view=list">
-            <button className="px-8 py-4 border border-[var(--border)] text-white hover:bg-[var(--purple-700)] rounded-lg font-bold transition-colors">View list catalog</button>
+            <button className="focus-ring px-8 py-4 border border-[var(--border)] text-white hover:bg-[var(--purple-700)] rounded-lg font-bold transition-colors">
+              View list catalog
+            </button>
           </Link>
         </div>
 
@@ -53,6 +62,6 @@ export default function NotFoundPage() {
           <p>Last known: PHX, AZ · LAT 33.4° N · LON 112.1° W</p>
         </div>
       </motion.div>
-    </div>
+    </main>
   );
 }

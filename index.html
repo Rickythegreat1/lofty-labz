@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #0a0612">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0612" />
+    <title>Lofty Labz — A digital lab in Phoenix. Every engagement backed in writing.</title>
+    <meta name="description" content="Lofty Labz is a Phoenix digital agency. Six practices, one written guarantee on every engagement. Map the work, read the case studies, schedule a discovery call." />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="mask-icon" href="/favicon.svg" color="#4f2c9c" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lofty Labz" />
+    <meta property="og:title" content="Lofty Labz — A digital lab in Phoenix." />
+    <meta property="og:description" content="Every engagement backed in writing. Six practices, one guarantee, mapped as a constellation." />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:url" content="https://www.loftylabz.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lofty Labz — A digital lab in Phoenix." />
+    <meta name="twitter:description" content="Every engagement backed in writing. Six practices, one guarantee, mapped as a constellation." />
+    <meta name="twitter:image" content="/og-image.svg" />
+    <style>
+      html,
+      body {
+        background-color: #0a0612;
+        margin: 0;
+      }
+      body {
+        color: #faf7fb;
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      }
+      #branded-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0a0612;
+      }
+      #branded-loader .lockup {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      #branded-loader .lockup svg {
+        width: 40px;
+        height: 40px;
+      }
+      #branded-loader .lockup .wordmark {
+        font-family: 'Archivo Black', 'DM Sans', system-ui, sans-serif;
+        font-size: 20px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: #faf7fb;
+      }
+      #branded-loader .progress {
+        width: 120px;
+        height: 2px;
+        background: rgba(155, 127, 217, 0.2);
+        margin-top: 20px;
+        border-radius: 1px;
+        overflow: hidden;
+      }
+      #branded-loader .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #9b7fd9;
+        animation: load 1.5s ease-out forwards;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes load {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #branded-loader .lockup,
+        #branded-loader .progress-bar {
+          animation: none;
+        }
+        #branded-loader .progress-bar {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="branded-loader" aria-hidden="true">
+      <div class="lockup">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path
+            d="M50 10 A40 40 0 0 1 50 90 Q35 75 35 50 Q35 25 50 10"
+            fill="#4f2c9c"
+          />
+          <g transform="translate(42, 35)">
+            <rect x="5" y="0" width="10" height="3" fill="#faf7fb" />
+            <path
+              d="M5 3 L5 15 Q10 18 15 15 L15 3"
+              fill="none"
+              stroke="#faf7fb"
+              stroke-width="1.5"
+            />
+          </g>
+        </svg>
+        <span class="wordmark">Lofty Labz</span>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Loading">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

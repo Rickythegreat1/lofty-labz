@@ -1,215 +1,156 @@
-# Lofty Labz - Constellation-Themed Website
+# Lofty Labz
 
-A cinematic, constellation-themed business website featuring an interactive star map navigation system that represents five core service offerings as celestial constellations.
+A digital lab in Phoenix. Every engagement, in writing.
 
-![Lofty Labz](https://via.placeholder.com/1200x600/4A148C/FFFFFF?text=Lofty+Labz+Star+Map)
+The site is a constellation-themed portfolio + studio page: a Three.js starfield, six service constellations rendered as line-art glyphs over a brass-on-dark palette, and an expand-in-place navigation model where the URL alone drives whether a constellation is collapsed, expanded, or showing a case study.
 
-## 🌟 Overview
+## Overview
 
-Lofty Labz is a modern web application that transforms traditional business navigation into an immersive starfield experience. Each service constellation represents a different business offering:
+Six constellations, six practices:
 
-- **Strategy Constellation** - Strategic planning and consulting
-- **Design Constellation** - Creative design services
-- **Development Constellation** - Technical development solutions
-- **Marketing Constellation** - Marketing and brand strategy
-- **Growth Constellation** - Business growth initiatives
+- **The Build** — Web design & development (Champro Merch Builder · EduTrack · Nexus)
+- **The Voice** — Brand identity & messaging (placeholders)
+- **The Signal** — Social media & content (placeholders)
+- **The Engine** — AI workflows & automation (Champro Asset Pipeline + 2 placeholders)
+- **The Lighthouse** — Care retainers & ongoing partnership (placeholders)
+- **The Reel** — Motion design & animation (Easy Ice · Podunkton 2D · IUPUI Math Center)
 
-The site features a **North Star Guarantee** positioned at the top center, symbolizing our commitment to guiding clients with unwavering reliability.
+The **North Star Guarantee** sits in the top bar as a brass-tinted marker that links to the written outcome guarantee — one promise per practice.
 
-## ✨ Key Features
+## Key Features
 
-### Interactive Star Map Navigation
-- **Desktop Experience**: Fully interactive star map with hover states and constellation connections
-- **Mobile Experience**: Traditional list view optimized for touch targets
-- **Parallax Starfield**: Dynamic background with depth and motion
-- **Cinematic Logo Animation**: Engaging ignition sequence on page load
+### Navigation model
+The URL *is* the state. `/` renders the map collapsed; `/constellation/:slug` expands a constellation; `/constellation/:slug/star/:starSlug` opens its case-study panel. Browser back / forward / refresh all just work. No separate `ConstellationPage` or `StarPage` components — a single `StarMap` reads `useParams()` and derives layout.
 
-### Comprehensive Content
-- **10 Main Pages**: Home, Services, Case Studies, Team, Blog, Manifesto, Guarantee, Contact, and more
-- **15 Detailed Case Studies**: Real-world examples across all service constellations
-- **6 Blog Posts**: Thought leadership and industry insights
-- **Team Bios**: Meet the Lofty Labz crew
-- **Manifesto**: Our guiding principles and values
+### Visual system
+- Brass-on-dark line art, instrument-panel vocabulary, no card chrome inside sections (`.cta-block` is the only exception).
+- Custom GLSL particle starfield with depth, twinkle, and a soft DOF focal driven by the lifted constellation.
+- One 3D motif per practice (build / voice / signal / engine / lighthouse / reel) drawn behind the lifted constellation.
+- Two-layer parallax fallback (`OptimizedStarfield`) wrapped in Suspense + ErrorBoundary so the page paints fast and degrades gracefully on no-WebGL browsers.
+- Per-star schematic illustrations (`StarHeroVisual` — cube · dashboard · whiteboard · pipeline · film · snowflake · equations) rendered only for real stars.
+- One hand-authored Lottie (`brass-pulse`) on the Hailing Frequency hero.
 
-### Accessibility & Performance
-- WCAG 2.1 AA compliant
-- Fully responsive design
-- Optimized for performance
-- Semantic HTML structure
+### Accessibility
+- WCAG 2.1 AA target. `MotionConfig reducedMotion="user"` + global CSS guard + shader `uReducedMotion` uniform together honor `prefers-reduced-motion`.
+- Skip-link → `#main-content`. Keyboard tab order matches visual reading order. Brass focus ring on every interactive element via `.focus-ring` + `.focus-lift`.
+- All star buttons have descriptive `aria-label`s ("View case study: X — metric").
 
-## 🚀 Tech Stack
+### Verification
+- 79-test Playwright smoke + visual regression suite at desktop / tablet / mobile.
+- Star slug coverage: every one of the 18 stars exercised directly.
+- Link integrity: list view links + constellation links walked and verified.
 
-- **Framework**: React 18.3.1 with React Router 7.13.0
-- **Styling**: Tailwind CSS 4.1.12
-- **Animations**: Motion (Framer Motion) 12.23.24
-- **UI Components**: Radix UI + shadcn/ui
-- **Icons**: Lucide React
-- **Build Tool**: Vite 6.3.5
-- **Package Manager**: pnpm
-- **Language**: TypeScript
+## Tech Stack
 
-## 📦 Installation
+- **Framework**: React 18.3.1 · React Router 7.13.0 · TypeScript 5.8.3
+- **Styling**: Tailwind CSS 4.1.12 (v4 CSS-only config) · Radix UI + shadcn/ui patterns
+- **Motion**: Motion (Framer Motion) 12.23.24
+- **3D**: Three.js ^0.165.0 · @react-three/fiber ^8.18.0 · @react-three/drei ^9.122.0
+- **Media**: lottie-react ^2.4.1 · lucide-react 0.487.0
+- **Tooling**: Vite ^6.4.2 · @playwright/test ^1.60.0
 
-### Prerequisites
-- Node.js 18+ 
-- pnpm (recommended) or npm
+## Installation
 
-### Setup
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/lofty-labz.git
+git clone https://github.com/Rickythegreat1/lofty-labz.git
 cd lofty-labz
+npm install
+npm run dev
 ```
 
-2. Install dependencies:
+Dev server runs on `http://localhost:5173` by default. To run alongside another Vite project, pass `--port 5174 --strictPort`.
+
+## Available Scripts
+
 ```bash
-pnpm install
+npm run dev        # Vite dev server
+npm run build      # Production build (vite build)
+npm run preview    # Serve production build (vite preview)
+npm run typecheck  # tsc --noEmit
+npm run test:e2e   # Playwright smoke + visual regression
 ```
 
-3. Start the development server:
-```bash
-pnpm dev
-```
+## Brand
 
-4. Open your browser to the preview URL provided by Vite
-
-## 🎨 Brand Guidelines
-
-### Color Palette
-The site uses a purple-themed color palette inspired by the Lofty Labz business card:
-
-- **Primary Purple**: `#4A148C` (Deep Purple)
-- **Secondary Purple**: `#7B1FA2` (Medium Purple)
-- **Accent Purple**: `#9C27B0` (Light Purple)
-- **Background**: Deep space blacks and grays
-- **Text**: White and light grays for contrast
+### Palette
+- `--background` `#0a0612` (deep purple-black)
+- `--paper` `#faf7fb` (warm white)
+- `--brass` `#c9a961` (accent — focus rings, glyph outlines, focal hairlines)
+- `--purple-900 / 700 / 500 / 300`, `--lavender-200 / 100` (interface scale)
+- `--ink`, `--ink-muted` (text on light)
 
 ### Typography
-- **Headings**: Orbitron (futuristic, space-themed)
-- **Body Text**: Inter (clean, readable)
+- **Display**: Archivo Black
+- **Body**: DM Sans
+- **Mono**: JetBrains Mono
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 lofty-labz/
 ├── src/
 │   ├── app/
-│   │   ├── App.tsx                 # Main application component
+│   │   ├── App.tsx                    # Root MotionConfig
+│   │   ├── layouts/Root.tsx           # Skip-link + ScrollProgress + Outlet
 │   │   ├── components/
-│   │   │   ├── ui/                 # shadcn/ui components
-│   │   │   ├── StarMap.tsx         # Interactive star map
-│   │   │   ├── Navigation.tsx      # Main navigation
-│   │   │   └── ...
-│   │   ├── pages/
-│   │   │   ├── HomePage.tsx
-│   │   │   ├── ServicesPage.tsx
-│   │   │   ├── CaseStudiesPage.tsx
-│   │   │   └── ...
-│   │   ├── data/
-│   │   │   ├── constellations.ts   # Service constellation data
-│   │   │   ├── caseStudies.ts      # Case study content
-│   │   │   └── ...
-│   │   └── lib/
-│   │       └── utils.ts
-│   └── styles/
-│       ├── fonts.css               # Font imports
-│       └── theme.css               # Theme tokens
-├── public/                         # Static assets
-├── guidelines/                     # Design guidelines
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-└── README.md
+│   │   │   ├── StarMap.tsx            # Top-level URL → state composer
+│   │   │   ├── ConstellationField.tsx # Orchestrates the 6 constellations
+│   │   │   ├── Constellation.tsx      # Per-constellation glyph renderer
+│   │   │   ├── ConstellationDetail.tsx# Expanded section content
+│   │   │   ├── StarPanel.tsx          # Case-study side panel
+│   │   │   ├── OptimizedStarfield.tsx # Canvas-2D fallback
+│   │   │   ├── diagrams/
+│   │   │   │   ├── ConstellationIcon.tsx
+│   │   │   │   ├── StarHeroVisual.tsx
+│   │   │   │   └── LottieAnimation.tsx
+│   │   │   └── ui/                    # shadcn/ui primitives
+│   │   ├── three/StarfieldScene.tsx   # GLSL particle field + per-practice motif
+│   │   ├── data/constellations.ts     # SOURCE OF TRUTH for content + glyph geometry
+│   │   ├── pages/                     # Home, NorthStar, TheLab, HailingFrequency, Coordinates, Transmissions, etc.
+│   │   └── lib/choreography.ts        # Central timing + variants
+│   └── styles/theme.css               # Tokens, .brass-corner, .pull-quote, .process-rail, .focus-ring, .focus-lift
+├── public/lottie/brass-pulse.json     # Hand-authored brand Lottie
+├── tests/smoke.spec.ts                # 79-test Playwright suite
+├── docs/
+│   ├── STATUS.md                      # Hand-off doc with tier list of remaining work
+│   ├── work-audit.md                  # Real-work discovery audit (rounds 1-3)
+│   ├── interactions.md                # UI interaction inventory
+│   └── phase-1-register.md            # Design-system register
+└── CLAUDE.md                          # Working notes for the AI build agent
 ```
 
-## 🌐 Pages
+## Hard Rules
 
-1. **Home** - Star map overview with constellation navigation
-2. **Services** - Detailed service offerings by constellation
-3. **Case Studies** - 15 detailed project showcases
-4. **Team** - Meet the Lofty Labz crew
-5. **Blog** - Thought leadership articles
-6. **Manifesto** - Our principles and values
-7. **Guarantee** - The North Star Guarantee details
-8. **Contact** (Hailing Frequency) - Get in touch
-9. **Privacy Policy** - Data protection information
-10. **Terms of Service** - Usage terms
+- **No audio** anywhere on the site
+- **No card chrome** inside sections (only `.cta-block` may carry brass corners)
+- **No invented metrics** on placeholder stars — `metric: 'Case study pending'` for any star without `repoUrl` / `liveUrl` / `figmaUrl` / `heroVisual`
+- **Every dot is on an edge** — no floating brass anchors
+- **Real stars only get hero visuals**
 
-## 🛠️ Development
+See [CLAUDE.md](CLAUDE.md) for the agent-facing version.
 
-### Available Scripts
+## Routes
 
-```bash
-# Start development server
-pnpm dev
+| Path | Renders |
+|---|---|
+| `/` | Map view (StarMap collapsed) |
+| `/?view=list` | List view (constellations + stars as sections) |
+| `/constellation/:slug` | StarMap with that constellation expanded |
+| `/constellation/:slug/star/:starSlug` | + case-study panel open |
+| `/star/:slug` | Legacy flat path → redirects through `StarRedirect` to the nested form |
+| `/the-north-star` | Outcome guarantee — one promise per constellation |
+| `/the-lab` (+ `/process`, `/manifesto`) | Studio page — Team / Process / Manifesto tabs |
+| `/hailing-frequency` | Contact form |
+| `/coordinates` | Site index (HTML sitemap) |
+| `/transmissions` (+ `/:slug`) | Long-form writing |
 
-# Build for production
-pnpm build
+## License
 
-# Preview production build
-pnpm preview
-```
+Proprietary and confidential. All rights reserved.
 
-### Code Style
-- TypeScript strict mode enabled
-- ESLint configuration included
-- Tailwind CSS for styling (no inline styles)
-- Component-based architecture
+## Contact
 
-## 🔧 Configuration
+- **Web**: [loftylabz.com](https://loftylabz.com)
+- **GitHub**: [Rickythegreat1/lofty-labz](https://github.com/Rickythegreat1/lofty-labz)
 
-### Vite Configuration
-The project uses Vite 6.3.5 with:
-- React plugin
-- Tailwind CSS plugin
-- TypeScript support
-
-### Tailwind Configuration
-Tailwind v4 is used with custom theme tokens defined in `src/styles/theme.css`.
-
-## 🎯 Design Principles
-
-1. **Cinematic Experience**: Engaging animations and transitions
-2. **Constellation Metaphor**: All services organized as star constellations
-3. **Dual Navigation**: Interactive map for desktop, list for mobile
-4. **North Star Guarantee**: Always visible, guiding principle
-5. **Accessibility First**: WCAG 2.1 AA compliance throughout
-
-## 📱 Responsive Design
-
-- **Desktop** (1024px+): Full star map navigation with hover effects
-- **Tablet** (768px-1023px): Simplified star map with touch optimization
-- **Mobile** (<768px): List-based navigation with constellation theme
-
-## 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-## 📄 License
-
-This project is proprietary and confidential. All rights reserved by Lofty Labz.
-
-## 🐛 Known Issues
-
-Please check the [Issues](https://github.com/YOUR_USERNAME/lofty-labz/issues) page for current known issues and planned enhancements.
-
-## 📞 Contact
-
-For questions or support:
-- **Website**: [Your Website]
-- **Email**: contact@loftylabz.com
-- **GitHub**: [Your GitHub Profile]
-
-## 🙏 Acknowledgments
-
-- Design inspiration from the Lofty Labz business card template
-- Star map concept and constellation metaphor
-- shadcn/ui for component library
-- Radix UI for accessible primitives
-
----
-
-**Built with 💜 by the Lofty Labz team**
-
-*Navigating businesses to their North Star*
+See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for open-source credits.

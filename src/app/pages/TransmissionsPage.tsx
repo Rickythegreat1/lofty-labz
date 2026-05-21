@@ -3,8 +3,15 @@ import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, Radio } from 'lucide-react';
 import { transmissions } from '../data/transmissions';
 import { useState } from 'react';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function TransmissionsPage() {
+  useDocumentMeta({
+    title: 'Transmissions — Notes from the lab · Lofty Labz',
+    description:
+      'Essays and field notes from Lofty Labz on guarantees, build process, measurement, and the craft of digital work.',
+  });
+
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // Get all unique tags
@@ -16,16 +23,16 @@ export default function TransmissionsPage() {
     : transmissions;
 
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white">
+    <div className="min-h-screen bg-[var(--background)] text-white">
       {/* Ambient Background */}
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--purple-900)] to-transparent" />
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
+          <Link to="/" className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span>Back to map</span>
           </Link>
@@ -38,8 +45,8 @@ export default function TransmissionsPage() {
                   stroke="none"
                 />
                 <g transform="translate(42, 35)">
-                  <rect x="5" y="0" width="10" height="3" fill="white" />
-                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="white" strokeWidth="1.5" />
+                  <rect x="5" y="0" width="10" height="3" fill="var(--paper)" />
+                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="var(--paper)" strokeWidth="1.5" />
                 </g>
               </svg>
             </div>
@@ -48,7 +55,7 @@ export default function TransmissionsPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-6 py-16">
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,7 +108,7 @@ export default function TransmissionsPage() {
             >
               <Link
                 to={`/transmissions/${transmission.slug}`}
-                className="group block"
+                className="group block focus-ring rounded-lg"
               >
                 <div className="bg-[var(--purple-900)] border border-[var(--border)] rounded-xl p-8 hover:border-[var(--purple-300)] transition-all">
                   <div className="flex items-start justify-between gap-4 mb-4">

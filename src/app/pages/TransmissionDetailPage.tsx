@@ -4,15 +4,25 @@ import { ArrowLeft, Radio, Clock, User } from 'lucide-react';
 import { getTransmissionBySlug, getRecentTransmissions } from '../data/transmissions';
 import { getConstellationById } from '../data/constellations';
 import { Button } from '../components/ui/button';
+import { useDocumentMeta } from '../lib/useDocumentMeta';
 
 export default function TransmissionDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const transmission = slug ? getTransmissionBySlug(slug) : null;
 
+  useDocumentMeta({
+    title: transmission
+      ? `${transmission.subject} · Lofty Labz Transmissions`
+      : 'Transmission not found · Lofty Labz',
+    description: transmission
+      ? transmission.excerpt
+      : 'The transmission you were looking for is not in our archive.',
+  });
+
   if (!transmission) {
     return (
-      <div className="min-h-screen bg-[#0a0612] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--background)] text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-display mb-4">Transmission not found</h1>
           <Link to="/transmissions" className="text-[var(--purple-300)] hover:text-white">
@@ -30,18 +40,18 @@ export default function TransmissionDetailPage() {
   const recentTransmissions = getRecentTransmissions(3).filter(t => t.id !== transmission.id);
 
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white">
+    <div className="min-h-screen bg-[var(--background)] text-white">
       {/* Ambient Background */}
       <div className="fixed inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--purple-900)] to-transparent" />
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0612]/85 backdrop-blur-xl border-b border-[var(--border)]">
+      <header className="sticky top-0 z-50 bg-[var(--background)]/85 backdrop-blur-xl border-b border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
+            className="focus-ring rounded-md flex items-center gap-2 text-[var(--purple-300)] hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -55,8 +65,8 @@ export default function TransmissionDetailPage() {
                   stroke="none"
                 />
                 <g transform="translate(42, 35)">
-                  <rect x="5" y="0" width="10" height="3" fill="white" />
-                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="white" strokeWidth="1.5" />
+                  <rect x="5" y="0" width="10" height="3" fill="var(--paper)" />
+                  <path d="M5 3 L5 15 Q10 18 15 15 L15 3" fill="none" stroke="var(--paper)" strokeWidth="1.5" />
                 </g>
               </svg>
             </div>
@@ -65,7 +75,7 @@ export default function TransmissionDetailPage() {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-4xl mx-auto px-6 py-16">
+      <main id="main-content" className="relative z-10 max-w-4xl mx-auto px-6 py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,9 +125,9 @@ export default function TransmissionDetailPage() {
                 <span className="text-[var(--purple-300)]">·</span>
                 <Link
                   to={`/constellation/${constellation.id}`}
-                  className="text-sm text-[var(--purple-300)] hover:text-white transition-colors"
+                  className="focus-ring rounded-md text-sm text-[var(--purple-300)] hover:text-white transition-colors"
                 >
-                  Related to {constellation.name} →
+                  <span className="underline-draw">Related to {constellation.name}</span> →
                 </Link>
               </>
             )}
@@ -155,7 +165,7 @@ export default function TransmissionDetailPage() {
                 <Link
                   key={i}
                   to={`/transmissions/${related.slug}`}
-                  className="block group"
+                  className="block group focus-ring rounded-lg"
                 >
                   <div className="bg-[var(--purple-900)] border border-[var(--border)] rounded-lg p-6 hover:border-[var(--purple-300)] transition-all">
                     <div className="flex items-center gap-3 mb-2 font-mono text-xs text-[var(--purple-300)]">
@@ -181,7 +191,7 @@ export default function TransmissionDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="bg-gradient-to-br from-[var(--purple-500)] to-[var(--purple-700)] rounded-2xl p-12 text-center"
+          className="cta-block p-12 text-center"
         >
           <h2 className="font-display text-3xl mb-4">Work with us</h2>
           <p className="text-lg text-[var(--lavender-200)] mb-8 max-w-2xl mx-auto">
