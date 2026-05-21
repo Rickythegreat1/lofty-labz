@@ -331,3 +331,93 @@ The user reaffirmed: no audio anywhere on the site. A grep for `new Audio | Audi
 ### Icon library decision
 
 Plan documents Lucide (already installed) as the primary icon source, with `@phosphor-icons/react` reserved as a complementary set if a specific glyph is missing. No new dependencies installed this round — Lucide covers all current proposed surfaces (offering icons, process-step icons, Receipts row marks). Lottie deferred — earn it with a specific use case first.
+
+---
+
+## Round 4 — Hero visuals + Lottie + Lucide everywhere (Session 4)
+
+Round 3 left the work cleanly connected. Round 4 was about *signaling*: making real stars visibly different from placeholders, and letting practiced motion language land in concrete places.
+
+### Per-star hero visuals
+
+Seven brass-on-dark schematic illustrations were authored in `StarHeroVisual.tsx` and assigned to real stars only:
+
+| Star | Kind | Why this glyph |
+|---|---|---|
+| `champro-merch-builder` | cube | The product is a 3D customizer — a cube is the cleanest read of "in-browser 3D" without screenshot bias |
+| `edutrack-dashboard` | dashboard | Stylized grid + axis — instrument-panel vocabulary on a school-admin tool |
+| `nexus` | whiteboard | Whiteboard + cursor + chat bubbles — student-tutor live sessions made literal |
+| `champro-asset-pipeline` | pipeline | Funnel + valves — ingestion → conversion → distribution |
+| `easy-ice` | snowflake | Brand motion shipped for an ice retailer |
+| `podunkton-2d` | film | Film reel + frame ticks |
+| `iupui-math-center` | equations | Inline math glyphs (Σ, ∫, π) — 3 years of student-facing animation for math |
+
+Hard rule reaffirmed: placeholder stars get `heroVisual: undefined`. The visual richness gate is the second cue (after `metric`) that says "this is real work."
+
+### Lottie earned its keep
+
+`lottie-react` installed. A hand-authored Lottie (`public/lottie/brass-pulse.json`) — three concentric brass rings around a paper core, looping 4s — replaced the static `Radio` icon on the HailingFrequencyPage hero. Honors `prefers-reduced-motion` via `LottieAnimation.tsx`. Earned through a specific use case as Round 3 required.
+
+### Lucide everywhere
+
+- **Receipts row** — `Github` / `ExternalLink` / `Figma` next to each Receipts link in StarPanel
+- **Offerings grid** — `Layout` / `AppWindow` / `ShoppingCart` / `Palette` etc., one per offering
+- **Process steps** — `Search` / `BarChart3` / `Pencil` / `Hammer` / `Rocket` etc.
+- **Constellation list-view marks** — practice-specific mark per row
+
+`@phosphor-icons/react` not added — Lucide covered every glyph.
+
+### Federated merge + Nexus
+
+`jersey-builder-pro` star folded into `champro-merch-builder` (v1+v2 history captured in the case-study fields). Nexus promoted into The Build as the new third real star (Crossroads Education's student-tutor live-session platform).
+
+### Three.js bundle analysis
+
+Measured: `StarfieldScene` chunk at 818KB raw / 221KB gzip after lazy split. Deferred further splitting — chunk is lazy with a 2D fallback in place, fetch is async/non-blocking. Revisit only if real users report slow map mount.
+
+---
+
+## Round 5 — Tier 1 verifications + a11y safety + placeholder honesty (Session 5)
+
+The first session that *verified* rather than built. Drove every Tier 1 acceptance criterion in `docs/STATUS.md` end-to-end, surfaced four real issues, and shipped fixes the same session.
+
+### Verifications complete
+
+| # | Item | Outcome |
+|---|---|---|
+| 1 | Reduced motion | Code-audit pass: MotionConfig + global CSS guard + shader `uReducedMotion` + Lottie all wired. OS-toggle live test deferred. |
+| 2 | Mobile path (375px) | Pass — ListView engages below 768px; e2e covers true 375x812. |
+| 3 | Tab key focus order | **3 issues found + fixed.** |
+| 4 | First-time hero cascade | Pass — mounts + settles by ~2.5s. E2e covers dismiss / Escape / 7-day persist. |
+| 5 | Resize during expanded | Pass — lifted constellation re-centers to (50vw, 22vh) on resize with no jump. |
+| 6 | WebGPU / WebGL fallback | **1 gap found + fixed.** |
+| 7 | Stale Playwright refs + run e2e | Zero stale refs. **79/79 Playwright tests pass in 9.1m.** |
+
+### Issues found and fixed
+
+1. **`<motion.header>` was sourced after `<main>`** in `StarMap.tsx`. Tab order was `skip-link → 24 map elements → header → CTA` — header *after* main, contradicting visual reading order and rendering the skip-link a no-op. Header moved before main; z-40 preserves visual stacking.
+2. **Double focus stops on `NorthStar`** — `<Link>` + child `<motion.div whileHover whileTap>` both received focus because Motion auto-adds `tabIndex={0}` when interaction props are set. `tabIndex={-1}` on the inner motion child eliminates the duplicate. `aria-label` moved to the parent Link.
+3. **Double focus stop on `Book a call` CTA** — same pattern in `MagneticCTA`. Same fix: `tabIndex={-1}` on the inner motion span; `focus-ring` + `focus-lift` moved to the parent Link.
+4. **No `ErrorBoundary` above the lazy `StarfieldScene`** — Suspense's fallback only covered the chunk-loading phase, not WebGL init failure. Added a tiny `WebGLErrorBoundary` class that falls back to `OptimizedStarfield` on any render error from the Three.js tree.
+
+After fixes: 31 focusables on `/` → 29. Tab order now: skip-link → logo → NorthStar → Map/List toggle → constellations → CTA.
+
+### Placeholder metric honesty (Tier 5)
+
+Every star without `repoUrl` / `liveUrl` / `figmaUrl` / `heroVisual` had its `metric` field rewritten to `"Case study pending"`. 11 stars affected:
+
+- The Voice — `bright-path-wellness`, `valley-ventures`, `local-goods-market`
+- The Signal — `az-auto-repair`, `cactus-creative`, `phoenix-fitness`
+- The Engine — `lead-qualifier-ai`, `content-pipeline`
+- The Lighthouse — `scottsdale-medical`, `desert-dining`, `valley-tech-hub`
+
+Before: placeholders read "3x social engagement", "85% accuracy", "+340% engagement" — visually indistinguishable from real metrics. After: a placeholder is obviously a placeholder on the constellation map face. The Star Panel internals (hypothesis / baseline / reading / intervention bullets) remain unchanged — out of Tier 5 scope, flagged for a future pass.
+
+### Tier 2 visual smokes
+
+Drove Chrome through `/the-north-star`, `/the-lab`, `/the-lab/process`, `/transmissions`, `/transmissions/why-your-agencys-case-studies-are-propaganda`, `/coordinates`, `/constellation/the-reel`. Every surface rendered clean — h1 present, title set, no console errors, expected sections / links / counts. The North Star page surfaces all six promises (incl. The Reel). The Reel constellation's Promise pull-quote does not overlap the lockup.
+
+### Documentation refresh (Tier 6)
+
+`CHANGELOG.md` 1.1.0 entry, `ATTRIBUTIONS.md` rewritten with full open-source roster, `README.md` updated to current architecture (6 constellations, URL-driven expand-in-place, brass-on-dark, real Three.js + Lottie stack).
+

@@ -189,3 +189,57 @@ React Router v7 owns routing. URL ↔ state is the model:
 | TheLabPage emails/phones | ✓ underline-draw + color | ✓ ring + lift | — |
 | Accordion trigger | ✓ underline + chevron rotate | ✓ default | — |
 | Form inputs | ✓ border focus | ✓ ring | — |
+
+## Added in Session 4 + 5
+
+### Static identity visuals (no motion, but they shape entry timing)
+
+- **StarHeroVisual** — 7 brass-on-dark SVG schematics (cube · dashboard · whiteboard · pipeline · film · snowflake · equations) at the top of the StarPanel for real stars only. Reveal happens with the panel slide (right-edge enter from `StarPanel` Framer Motion variant). No separate hover state — the visual is identity, not affordance.
+- **ConstellationIcon** — per-practice line-art mark on the ListView rows. Same hover stack as the row's "Explore X" link (no separate hover on the mark itself).
+
+### Lottie
+
+- **HailingFrequency hero** — `public/lottie/brass-pulse.json` plays via `LottieAnimation.tsx`. Loops 4s. Honors `prefers-reduced-motion` (renders the final frame still, no loop, when the OS toggle is on).
+
+### Iconography (Lucide) — static decorations, no own micro-interactions
+
+- **Receipts row** (StarPanel) — `Github` / `ExternalLink` / `Figma` 16px next to each link. The hover lives on the parent `<a>` (underline-draw + color), not the icon.
+- **Offerings grid** (ConstellationDetail) — `Layout` / `AppWindow` / `ShoppingCart` / `Palette` / etc. one per offering tile. Tiles are static (no link); icons are part of the type lockup.
+- **Process steps** (TheLabPage / ProcessFlow) — `Search` / `BarChart3` / `Pencil` / `Hammer` / `Rocket` etc. Static.
+
+### Hero cascade (refresh)
+
+Cleared `localStorage.lofty-hero-dismissed:v1` and reloaded `/`. Cascade orchestrated by `choreography.ts` variants:
+
+| Phase | Element | Timing window |
+|---|---|---|
+| 0–600ms | Starfield canvas mounts + fades in | First paint |
+| 300–800ms | North Star marker scales in (delay 1.0s in NorthStar.tsx initial→animate) | — |
+| 800–1400ms | Constellation glyphs stagger | `staggerChildren` |
+| 1200–1800ms | Line `strokeDashoffset` drains 0 → drawn | Per-edge transition |
+| 1600–2000ms | Constellation labels reveal | — |
+| ~2000ms | Hero panel rises from bottom | Spring |
+
+Live observation: by ~2.5s after a hard reload, all elements are settled (opacity 1, strokeDashoffset 0). End-to-end cascade lands clean.
+
+### Tab order (post Session 5 fix)
+
+`<motion.header>` is now sourced before `<main>` so the keyboard sequence on `/` is:
+
+1. Skip-link → `#main-content`
+2. Logo → `/`
+3. NorthStar — single focus stop (the inner `motion.div` carries `tabIndex={-1}` to neutralize Motion's auto-tabindex from `whileHover` / `whileTap`)
+4. Map/List toggle
+5. — 24 constellation map elements (stars + "Enter the X constellation" buttons) —
+6. Book a call CTA — single focus stop (same `tabIndex={-1}` pattern on the inner `motion.span`)
+
+Brass focus ring + 1px focus-lift visible at every stop via `.focus-ring` + `.focus-lift` utilities on the focusable element.
+
+### WebGL fallback path
+
+`<WebGLErrorBoundary>` wraps the `<Suspense>` around the lazy `StarfieldScene`. Two failure modes both fall back to `OptimizedStarfield` (canvas-2D, two-layer parallax):
+
+- Chunk fetch failure / pending → Suspense fallback
+- WebGL2 init failure (rare in 2026 browsers) → ErrorBoundary fallback
+
+The rest of the DOM-based UI (constellations, header, hero, CTA, panel) is unaffected by either failure — only the starfield + 3D motif areas degrade.

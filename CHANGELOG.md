@@ -5,6 +5,52 @@ All notable changes to the Lofty Labz constellation-themed website will be docum
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-05-20
+
+### Added — Architecture
+- URL-driven expanded-state navigation: `/`, `/constellation/:slug`, `/constellation/:slug/star/:starSlug` all render `HomePage` → `StarMap` and derive state from `useParams()`. No more separate `ConstellationPage` / `StarPage` components.
+- Sixth constellation **The Reel** (motion design) with film-reel glyph + 3 real stars (Easy Ice, Podunkton 2D, IUPUI Math Center).
+- Three.js scene `StarfieldScene.tsx` (lazy-loaded) with custom GLSL particle field, per-constellation 3D motifs (build / voice / signal / engine / lighthouse / reel), and DOF focal on the lifted constellation.
+- `OptimizedStarfield.tsx` canvas-2D fallback wrapped in both Suspense (chunk load) and `WebGLErrorBoundary` (WebGL init failure).
+- `StarHeroVisual.tsx` — 7 brass-on-dark schematic illustrations (cube · dashboard · whiteboard · pipeline · film · snowflake · equations) rendered only for real stars.
+- `LottieAnimation.tsx` wrapper + hand-authored `public/lottie/brass-pulse.json`, integrated on HailingFrequencyPage hero.
+- `ConstellationIcon.tsx`, `ProcessFlow.tsx`, `ManifestoPillar.tsx`, `TierGlyph.tsx`.
+- Lucide icons throughout (Receipts row, offerings grid, process steps).
+- 7-day localStorage hero dismissal cooldown (`lofty-hero-dismissed:v1`).
+- Skip-link in `Root.tsx` targeting `#main-content`.
+- 79-test Playwright smoke + visual-regression suite covering every route at desktop / tablet / mobile, plus full STAR_IDS coverage and link integrity.
+
+### Changed — Content
+- Roster: 18 stars across 6 constellations. Real work: champro-merch-builder (merged v1/v2 history), champro-asset-pipeline, edutrack-dashboard, nexus, easy-ice, podunkton-2d, iupui-math-center. Voice / Signal / Lighthouse remain placeholder.
+- Placeholder star `metric` fields reframed to `"Case study pending"` so they no longer read as fake real projects (11 stars).
+- Removed card chrome from sections; only `.cta-block` retains brass corners. Replaced with `.brass-corner` utility + `.pull-quote` + `.process-rail`.
+- North Star copy pulls 6 promises from `constellations.ts` (includes Reel).
+- Hero cascade choreographed via `choreography.ts` — single source for all timing.
+
+### Changed — Architecture / Accessibility
+- `<motion.header>` sourced before `<main>` in `StarMap.tsx` so keyboard tab order matches visual reading order (skip-link → header → constellations → CTA). Header keeps z-40 for visual stacking.
+- `NorthStar.tsx` + `MagneticCTA` (Book a call): `tabIndex={-1}` on inner motion children to neutralize Motion's auto-tabindex from `whileHover` / `whileTap` — single focus stop per logical control. Focus ring + lift live on the parent `<Link>`.
+- `<MotionConfig reducedMotion="user">` at App root; global CSS guard in theme.css; shader `uReducedMotion` uniform halts drift + twinkle.
+
+### Removed
+- Audio: zero `<audio>`, zero `new Audio()`, zero `AudioContext`, zero Lottie with synced audio. Verified by grep across `src/`, `*.css`, `index.html`.
+- Card chrome inside section content. Card pattern survives only on `.cta-block`.
+- Standalone `ConstellationPage.tsx` and `StarPage.tsx` (replaced by URL-driven expansion of `StarMap`).
+- Fabricated metrics on placeholder stars (see Changed/Content).
+
+### Fixed
+- Trackpad parallax stutter: split mousemove into synchronous `mouseRef` (Three.js consumer) + rAF-throttled `mousePosition` state (DOM consumers).
+- vw/vh translation on lifted constellation auto-recenters on viewport resize.
+- 13+ visual issues from session 2 live critique (starfield over-glow, label wrap, tooltip card chrome, lift target unit, motif positioning, CoordinatesHUD overlap, scroll-fade of lockup, etc.).
+
+### Technical Stack
+- React 18.3.1 · React Router 7.13.0 · Motion (Framer Motion) 12.23.24
+- Three.js ^0.165.0 · @react-three/fiber ^8.18.0 · @react-three/drei ^9.122.0
+- Tailwind CSS 4.1.12 · Radix UI · lottie-react ^2.4.1 · lucide-react 0.487.0
+- Vite ^6.4.2 · TypeScript 5.8.3 · Playwright ^1.60.0
+
+---
+
 ## [1.0.0] - 2026-05-10
 
 ### Added

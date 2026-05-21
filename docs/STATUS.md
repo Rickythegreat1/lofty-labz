@@ -1,8 +1,8 @@
 # Lofty Labz — Build Status & Hand-off
 
-**Last updated**: 2026-05-20 (end of session 4)
-**Branch**: main · uncommitted working tree on disk
-**Dev server**: user runs `npm run dev` on `localhost:5173`
+**Last updated**: 2026-05-20 (end of session 5)
+**Branch**: phase-0-eject · uncommitted working tree on disk
+**Dev server**: user runs `npm run dev` on `localhost:5173` (or 5174 if Jersey Builder Pro is squatting 5173 — see Session 5 note)
 
 This document is the single source of truth for the *current state* of the site and *what's still open*. Read this first when picking work back up.
 
@@ -35,6 +35,19 @@ This document is the single source of truth for the *current state* of the site 
 - Added 6th constellation **The Reel** (motion design) with Easy Ice + Podunkton + IUPUI MAC stars + film-reel glyph + ReelMotif Three.js.
 - Replaced PHX Coffee Co placeholder with EduTrack.
 - Wrote `docs/work-audit.md` (Rounds 1+2).
+
+### Session 5 — Tier 1 verifications + a11y safety + placeholder honesty + doc refresh
+- **All Tier 1 verifications complete** — reduced motion (code-audit), mobile 375px, tab focus order, hero cascade, resize-during-expanded, WebGL fallback, stale Playwright refs + e2e (79/79 pass in 9.1m).
+- **4 issues found + fixed in same session**:
+  1. `<motion.header>` moved before `<main>` in `StarMap.tsx` — tab order now `skip-link → header → constellations → CTA`. z-40 preserves visual stacking.
+  2. `NorthStar` double focus stop killed — `tabIndex={-1}` on inner `motion.div`. `aria-label` lives on `<Link>`.
+  3. `Book a call` (MagneticCTA) double focus stop killed — same `tabIndex={-1}` pattern. `focus-ring` + `focus-lift` moved to parent `<Link>`.
+  4. `WebGLErrorBoundary` class added in `StarMap.tsx`, wraps the `Suspense` around `StarfieldScene` — chunk-fetch failure AND WebGL init failure both fall back to `OptimizedStarfield`.
+- **Tier 5 placeholder metric reframing** — 11 stars in Voice / Signal / Engine / Lighthouse without `repoUrl` / `liveUrl` / `figmaUrl` / `heroVisual` rewritten to `metric: 'Case study pending'`. Placeholders no longer read as fake real projects on the map face.
+- **"Five practices" → "Six practices"** in Hero subtitle, HomePage default meta description, and `index.html` static + OG + Twitter descriptions. The Reel had been hard-rule added in Session 3 but the meta copy hadn't followed.
+- **Tier 2 visual smokes** — 7 surfaces (/the-north-star, /the-lab, /the-lab/process, /transmissions, /transmissions/why-your-agencys-case-studies-are-propaganda, /coordinates, /constellation/the-reel) all render clean. North Star surfaces all six promises. Reel constellation Promise pull-quote doesn't overlap lockup.
+- **Tier 6 docs** — `CHANGELOG.md` 1.1.0 entry, `ATTRIBUTIONS.md` rewritten with full open-source roster (Lucide, Lottie, Three.js, R3F, drei, Motion, Playwright, fonts), `README.md` rebuilt around current architecture, `docs/work-audit.md` Round 4 + 5 appended, `docs/interactions.md` Session 4 + 5 entries appended.
+- Focusables on `/` decreased 31 → 29.
 
 ### Session 4 — Federated merge + connectivity round 2 + hero visuals + Lottie
 - **Merged** `jersey-builder-pro` into `champro-merch-builder` (v1+v2 history captured in case-study fields).
@@ -72,11 +85,11 @@ This document is the single source of truth for the *current state* of the site 
 
 ## Remaining work — TIER 1 through TIER 7
 
-(From the end-of-session-4 audit. Run Tier 1 first.)
+(Original from end-of-session-4 audit. Tier 1 / 2 / 5-metrics / 6 closed in Session 5; Tier 3 / 4 / 5-StarPanel-internals remain.)
 
-### TIER 1 — Could block ship · run these first
+### TIER 1 — ✅ COMPLETE (Session 5)
 
-These are verifications that have never actually been executed end-to-end. Each is a ~5-10 minute task.
+All 7 verifications driven end-to-end. 4 issues found + fixed in the same session (see Session 5 entry above). Table preserved for the audit trail.
 
 | # | Item | How to verify |
 |---|---|---|
@@ -88,17 +101,17 @@ These are verifications that have never actually been executed end-to-end. Each 
 | 6 | **WebGPU fallback** | Open in older Safari (or set `gl: () => null` temporarily). `OptimizedStarfield` should mount via Suspense fallback. |
 | 7 | **Stale Playwright references** | `grep -rn "eddies-trades\|desert-modern-homes\|invoice-automator\|jersey-builder-pro" tests/` — should return zero. Run `npm run test:e2e`. Likely needs snapshot regeneration. |
 
-### TIER 2 — Surfaces not re-verified after Session 4 changes
+### TIER 2 — ✅ COMPLETE (Session 5)
 
-Each of these needs a screenshot via Chrome AppleScript + a quick read-through. ~2 min each.
+Drove Chrome to each surface, captured DOM state + key counts.
 
-- `/the-north-star` — pulls promises from `constellations.ts`; verify all 6 promises render (including The Reel's)
-- `/the-lab` (Team tab) — monogram cards + email/phone underline-draws
-- `/the-lab/process` — ProcessFlow horizontal rail
-- `/transmissions` — index renders
-- `/transmissions/why-your-agencys-case-studies-are-propaganda` — detail renders
-- `/coordinates` — page renders
-- The Reel expanded state — post-fix; confirm Promise pull-quote doesn't overlap lockup once animation settles
+- `/the-north-star` ✅ — 6 promises render incl. The Reel; title "The North Star — Lofty Labz Outcome Guarantee"
+- `/the-lab` (Team tab default) ✅ — 3 tabs (Team / Process / Manifesto), 3 brass-corner team cards
+- `/the-lab/process` ✅ — Process tab activates
+- `/transmissions` ✅ — 6 transmission entries, 5 h2 titles, all linked
+- `/transmissions/why-your-agencys-case-studies-are-propaganda` ✅ — 299 words, 2 h2 subsections, Related-to-The-Build link present
+- `/coordinates` ✅ — 6 h2 sections (Nav / Constellations / Cases / Transmissions / Contact / Legal), lat/lon + Phoenix present
+- The Reel expanded ✅ — Promise pull-quote at y:365–545, lockup at y:146–266. No overlap.
 
 ### TIER 3 — Imagery still missing per original "design imagery for each unique section"
 
@@ -114,21 +127,22 @@ Each of these needs a screenshot via Chrome AppleScript + a quick read-through. 
 - **Deeper Figma file enumeration** — `Taska` and `Lofty Labz` Figma projects' child files not enumerated. Might surface Voice/Signal real work.
 - **`@phosphor-icons/react`** as complementary icon library — plan recommended; never installed (Lucide covered everything needed so far).
 
-### TIER 5 — PhD-quality polish opportunities
+### TIER 5 — Polish opportunities (placeholder metric ✅ done; rest remain)
 
-- **Placeholder stars metric handling** — Voice/Signal/Lighthouse placeholders show fabricated metrics ("3x social engagement", "85% accuracy"). Reframe as "Case study pending" or "Anonymized client" until real ones land. *Currently reads as fake real projects.*
+- ~~**Placeholder stars metric handling**~~ ✅ DONE in Session 5 — 11 placeholders now read `metric: 'Case study pending'`. The Star Panel internals (hypothesis / baseline / reading / intervention bullets / projectId / lead / date) are still fabricated for placeholders — out of Tier 5 scope this session; flag for a future "placeholder StarPanel honesty" pass.
 - **Error states** — what if a star has malformed data? Constellation with broken shape? Not exercised.
 - **CoordinatesHUD context swap** — verify it shows focal constellation name + position when expanded (earlier plan mentioned this; need DOM check).
 - **Loading state before Three.js boots** — `OptimizedStarfield` mounts as fallback; verify it's actually visible on cold load (no two-canvas flash).
 - **Scrollbar styling** — currently OS default. Could be brass-themed.
 - **Cursor reticle** — only verified on map. Other surfaces use default cursor; might be intentional (only the map is the "navigation cosmos").
 
-### TIER 6 — Documentation drift
+### TIER 6 — ✅ COMPLETE (Session 5)
 
-- `README.md` — not updated since constellation rewrite
-- `CHANGELOG.md` — not updated for Sessions 2–4
-- `ATTRIBUTIONS.md` — verify Lucide / Lottie / Three.js credits exist
-- `docs/interactions.md` — created in Session 1, doesn't reflect hero visuals, Lottie, Receipts icons, per-offering icons
+- `README.md` ✅ rewritten — current architecture (6 constellations, URL-driven expand-in-place, Three.js + Lottie + Motion stack, current scripts, current routes, current project structure)
+- `CHANGELOG.md` ✅ — 1.1.0 entry covers Sessions 2–5
+- `ATTRIBUTIONS.md` ✅ — full open-source roster (React, Router, Vite, TS, Tailwind, Radix, shadcn/ui, cva, clsx, tailwind-merge, Motion, Three.js, R3F, drei, lottie-react / lottie-web, Lucide, Playwright, DM Sans + Archivo Black + JetBrains Mono)
+- `docs/interactions.md` ✅ — Session 4 + 5 entries appended (StarHeroVisual, Lottie, Lucide icon families, hero cascade timing table, post-fix tab order, WebGL fallback path)
+- `docs/work-audit.md` ✅ — Round 4 (hero visuals + Lottie + Lucide) + Round 5 (Tier 1 + a11y fixes + placeholder honesty) appended
 
 ### TIER 7 — Already-decided "do not do"
 
@@ -143,15 +157,12 @@ For completeness — these are NOT action items, listed so they don't get re-rai
 
 ## Recommended next-actions on resume
 
-In priority order:
+Tier 1, 2, 5-metrics, and 6 are DONE as of Session 5. What remains is opportunistic — not blocking ship, but worth a pass when time allows:
 
-1. **Tier 1** verifications — the seven items above. Each is a ~5–10 min check.
-2. **Tier 7-stale-tests** — run `npm run test:e2e`, fix breakages, regenerate snapshots.
-3. **Tier 2** quick visual smokes — 7 surfaces, ~2 min each.
-4. **Tier 5 placeholder metric reframing** — high signal / low effort; placeholders no longer look like fake real projects.
-5. **Tier 6 documentation drift** — append CHANGELOG, refresh interactions.md, update README.
-
-Everything else is opportunistic.
+1. **Tier 5 placeholder StarPanel honesty** — placeholders still have fabricated hypothesis / baseline / reading / intervention bullets / projectId / lead / date inside their Star Panel. Tier 5 this session only reframed the map-face metric. Two paths: (a) add a `placeholder: true` flag + StarPanel branch to render a "Case study coming soon" treatment, or (b) rewrite the internal fields to obviously-placeholder copy. (a) is cleaner.
+2. **Tier 3 imagery** — real team photos, Phoenix lab photo, richer NorthStarPage hero. Content authorship, not code.
+3. **Tier 4 deferrals** — AI conversation history audit (ChatGPT / Claude / Gemini sidebars), deeper Figma file enumeration, install `@phosphor-icons/react` if a specific glyph is missing.
+4. **Tier 5 polish remaining** — error states for malformed star data, CoordinatesHUD context swap DOM check, cold-load two-canvas flash check, brass-themed scrollbar, reticle cursor on non-map surfaces.
 
 ---
 
