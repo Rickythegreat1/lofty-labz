@@ -1,7 +1,7 @@
 # Lofty Labz — Build Status & Hand-off
 
 **Last updated**: 2026-05-20 (end of session 5)
-**Branch**: phase-0-eject · uncommitted working tree on disk
+**Branch**: phase-0-eject · session-5 work committed (5 commits ahead of `2a2248d design(4):...`)
 **Dev server**: user runs `npm run dev` on `localhost:5173` (or 5174 if Jersey Builder Pro is squatting 5173 — see Session 5 note)
 
 This document is the single source of truth for the *current state* of the site and *what's still open*. Read this first when picking work back up.
