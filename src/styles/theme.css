@@ -165,6 +165,35 @@
     font-family: 'DM Sans', sans-serif;
   }
 
+  /**
+   * Brass-themed scrollbar — instrument-panel vocabulary down to the
+   * scroll affordance. Subtle in rest; brighter when interacting.
+   * Firefox uses scrollbar-color; webkit uses pseudo-elements.
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 169, 97, 0.32) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(201, 169, 97, 0.32);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(201, 169, 97, 0.55);
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   .font-display {
     font-family: 'Archivo Black', sans-serif;
   }

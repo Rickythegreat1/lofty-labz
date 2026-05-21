@@ -133,8 +133,9 @@ Drove Chrome to each surface, captured DOM state + key counts.
 - **Error states** — what if a star has malformed data? Constellation with broken shape? Not exercised.
 - **CoordinatesHUD context swap** — verify it shows focal constellation name + position when expanded (earlier plan mentioned this; need DOM check).
 - **Loading state before Three.js boots** — `OptimizedStarfield` mounts as fallback; verify it's actually visible on cold load (no two-canvas flash).
-- **Scrollbar styling** — currently OS default. Could be brass-themed.
-- **Cursor reticle** — only verified on map. Other surfaces use default cursor; might be intentional (only the map is the "navigation cosmos").
+- ~~**Scrollbar styling**~~ ✅ DONE in Session 5 — brass-themed thumb (rgba 0.32 rest, 0.55 hover) via `scrollbar-width: thin` + webkit pseudo-elements in theme.css.
+- ~~**Cursor reticle**~~ ✅ DESIGN DECISION CONFIRMED — scope is intentional. Only `.cursor-reticle` (StarMap container) gets the brass crosshair; reading pages use the natural text/default cursor. Matches "Skyrim UX" mode-specific affordance.
+- **CoordinatesHUD context swap** — branch implemented in CoordinatesHUD.tsx but unused. Design pivoted to "hide on expand" (StarMap.tsx:357 mounts only when `!expandedId`); the focal lockup carries identity. Either remove the dead branch or wire the swap back up — that's a design call.
 
 ### TIER 6 — ✅ COMPLETE (Session 5)
 
