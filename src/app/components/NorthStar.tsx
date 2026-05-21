@@ -13,15 +13,21 @@ import { Link } from 'react-router';
 export function NorthStar() {
   return (
     <div className="relative">
-      <Link to="/the-north-star" className="focus-ring rounded-md">
+      <Link
+        to="/the-north-star"
+        className="focus-ring focus-lift rounded-md"
+        aria-label="View our guarantee - every engagement backed in writing"
+      >
         <motion.div
+          // tabIndex={-1} prevents Motion from auto-adding tabIndex={0} from
+          // whileHover/whileTap; focus + ring live on the parent <Link>.
+          tabIndex={-1}
           className="flex items-center gap-2 cursor-pointer group min-h-[44px] px-2"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.0, duration: 0.4 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          aria-label="View our guarantee - every engagement backed in writing"
         >
           <motion.div
             animate={{

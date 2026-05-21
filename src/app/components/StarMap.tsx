@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { ConstellationField } from './ConstellationField';
@@ -31,6 +31,24 @@ interface StarMapProps {
 
 const HERO_DISMISS_KEY = 'lofty-hero-dismissed:v1';
 const HERO_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+
+/**
+ * Catches render errors from the lazy Three.js chunk — chunk-fetch failure
+ * or WebGL/WebGL2 init failure on older browsers. Falls back to the canvas
+ * 2D OptimizedStarfield so the page never blanks out.
+ */
+class WebGLErrorBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    return this.state.hasError ? this.props.fallback : this.props.children;
+  }
+}
 
 /**
  * StarMap composes the entire spatial navigation of the site.
@@ -189,65 +207,26 @@ export function StarMap({ onViewToggle }: StarMapProps) {
         </h1>
       )}
 
-      <Suspense fallback={<OptimizedStarfield mousePosition={mousePosition} />}>
-        <StarfieldScene
-          mouseRef={mouseRef}
-          // The motif and DOF focal follow the LIFTED constellation
-          // position, not the original. Without panel: (50, 22). With
-          // panel open: (28, 22) so the motif sits beside the panel.
-          expandedPosition={
-            expandedConstellation
-              ? { x: starSlug ? 28 : 50, y: 22 }
-              : null
-          }
-          motif={expandedId ? MOTIF_FOR[expandedId] ?? null : null}
-        />
-      </Suspense>
+      <WebGLErrorBoundary fallback={<OptimizedStarfield mousePosition={mousePosition} />}>
+        <Suspense fallback={<OptimizedStarfield mousePosition={mousePosition} />}>
+          <StarfieldScene
+            mouseRef={mouseRef}
+            // The motif and DOF focal follow the LIFTED constellation
+            // position, not the original. Without panel: (50, 22). With
+            // panel open: (28, 22) so the motif sits beside the panel.
+            expandedPosition={
+              expandedConstellation
+                ? { x: starSlug ? 28 : 50, y: 22 }
+                : null
+            }
+            motif={expandedId ? MOTIF_FOR[expandedId] ?? null : null}
+          />
+        </Suspense>
+      </WebGLErrorBoundary>
 
-      <main
-        id="main-content"
-        aria-label="Constellation map of Lofty Labz services"
-        className="absolute inset-0"
-      >
-        <ConstellationField
-          constellations={constellations}
-          hoveredConstellation={hoveredConstellation}
-          expandedId={expandedId}
-          panelOpen={Boolean(starSlug)}
-          onHover={setHoveredConstellation}
-          onSelect={handleSelectConstellation}
-          onStarSelect={handleSelectStar}
-          // When expanded and the user starts scrolling into section content,
-          // fade the floating lockup so it doesn't occlude reading. Returns
-          // to full opacity when scrolled back to top.
-          opacity={
-            heroVisible
-              ? 0.25
-              : expandedId
-              ? Math.max(0.08, 1 - detailScroll * 0.92)
-              : 1
-          }
-          interactive={!heroVisible && detailScroll < 0.5}
-        />
-
-        <AnimatePresence>
-          {expandedConstellation && (
-            <ConstellationDetail
-              key={expandedConstellation.id}
-              constellation={expandedConstellation}
-              onStarSelect={handleSelectStar}
-              panelOpen={Boolean(starSlug)}
-              onScrollProgress={setDetailScroll}
-            />
-          )}
-        </AnimatePresence>
-      </main>
-
-      <AnimatePresence>
-        {heroVisible && !expandedId && <Hero key="hero" onExploreMap={dismissHero} />}
-      </AnimatePresence>
-
-      {/* Persistent UI - Top Bar (always visible from frame 1) */}
+      {/* Persistent UI - Top Bar. Sourced before <main> so keyboard tab order
+          matches visual reading order (skip-link → header → constellations →
+          CTA). z-index keeps it visually on top regardless of DOM order. */}
       <motion.header
         role="banner"
         className="absolute top-0 left-0 right-0 z-40 flex items-center justify-between p-6"
@@ -308,6 +287,49 @@ export function StarMap({ onViewToggle }: StarMapProps) {
 
         <ViewToggle onViewToggle={onViewToggle} />
       </motion.header>
+
+      <main
+        id="main-content"
+        aria-label="Constellation map of Lofty Labz services"
+        className="absolute inset-0"
+      >
+        <ConstellationField
+          constellations={constellations}
+          hoveredConstellation={hoveredConstellation}
+          expandedId={expandedId}
+          panelOpen={Boolean(starSlug)}
+          onHover={setHoveredConstellation}
+          onSelect={handleSelectConstellation}
+          onStarSelect={handleSelectStar}
+          // When expanded and the user starts scrolling into section content,
+          // fade the floating lockup so it doesn't occlude reading. Returns
+          // to full opacity when scrolled back to top.
+          opacity={
+            heroVisible
+              ? 0.25
+              : expandedId
+              ? Math.max(0.08, 1 - detailScroll * 0.92)
+              : 1
+          }
+          interactive={!heroVisible && detailScroll < 0.5}
+        />
+
+        <AnimatePresence>
+          {expandedConstellation && (
+            <ConstellationDetail
+              key={expandedConstellation.id}
+              constellation={expandedConstellation}
+              onStarSelect={handleSelectStar}
+              panelOpen={Boolean(starSlug)}
+              onScrollProgress={setDetailScroll}
+            />
+          )}
+        </AnimatePresence>
+      </main>
+
+      <AnimatePresence>
+        {heroVisible && !expandedId && <Hero key="hero" onExploreMap={dismissHero} />}
+      </AnimatePresence>
 
       <AnimatePresence>
         {!heroVisible && !expandedId && (
@@ -428,9 +450,17 @@ function MagneticCTA({
   }, [mousePosition.x, mousePosition.y, containerRef]);
 
   return (
-    <Link to="/hailing-frequency" ref={buttonRef}>
+    <Link
+      to="/hailing-frequency"
+      ref={buttonRef}
+      className="focus-ring focus-lift inline-block rounded-full"
+    >
       <motion.span
-        className="focus-ring focus-lift inline-flex items-center gap-2 px-6 py-3 min-h-[44px] bg-[var(--purple-500)] text-[var(--paper)] rounded-full font-medium shadow-lg hover:shadow-xl cursor-pointer"
+        // tabIndex={-1} prevents the double focus stop that Motion's
+        // whileHover/whileTap would otherwise create on this inner span;
+        // focus + brass ring live on the parent <Link>.
+        tabIndex={-1}
+        className="inline-flex items-center gap-2 px-6 py-3 min-h-[44px] bg-[var(--purple-500)] text-[var(--paper)] rounded-full font-medium shadow-lg hover:shadow-xl cursor-pointer"
         animate={{ x: offset.x, y: offset.y }}
         transition={{ type: 'spring', stiffness: 220, damping: 18 }}
         whileHover={{ scale: 1.04 }}
